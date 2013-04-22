@@ -8,8 +8,8 @@ Gem::Specification.new do |gem|
   gem.version       = RKit::VERSION
   gem.authors       = ["Thomas Petrachi"]
   gem.email         = ["thomas.petrachi@vodeclic.com"]
-  gem.description   = %q{TODO: Write a gem description}
-  gem.summary       = %q{TODO: Write a gem summary}
+  gem.description   = %q{Basics css / js and rails helpers}
+  gem.summary       = %q{Provide CSS bases, JS classic functions and rails helpers}
   gem.homepage      = ""
 
   gem.files         = `git ls-files`.split($/)
