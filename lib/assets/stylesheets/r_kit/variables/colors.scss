@@ -1,0 +1,34 @@
+$primary-color: #b62b2b !default;
+$secondary-color: skyblue !default;
+
+// need here defaults colors
+// colors needed : success - warning - danger - info - muted
+// for each of : classic - text - background
+
+/*
+$success-color
+$warning-color
+$danger-color
+$info-color
+$muted-color
+*/
+$text-color: #888 !default;
+/*$text-success-color
+$text-warning-color
+$text-danger-color
+$text-info-color
+$text-muted-color
+*/
+$background-color: #111 !default;
+/*$background-success-color
+$background-warning-color
+$background-danger-color
+$background-info-color
+$background-muted-color
+*/
+
+// constants
+$white: #fbfbfb !default;
+$black: #111 !default;
+
+$shadow: rgba(black, .6) !default;

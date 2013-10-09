@@ -1,0 +1,11 @@
+html{
+	font: 16px "Helvetica Neue","Helvetica","Arial", sans-serif;
+	-webkit-transform: translateZ(0); /* using GPU for render - webkit only */
+}
+
+body{
+	background-color: $application-background-color;
+	color: $typography-text-color;
+
+	margin: 0 0 1em;
+}

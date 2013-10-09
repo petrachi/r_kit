@@ -1,0 +1,26 @@
+h1,
+h2,
+h3{
+	font-weight: 200;
+	margin: 1em 0;
+	
+	a{
+		@include unstyled-link();
+		
+		&:hover{
+			text-decoration: none;
+		}
+	}
+}
+
+h1{
+	font-size: 4em;
+}
+
+h2{
+	font-size: 2em;
+}
+
+h3{
+	font-size: 1.75em;
+}
