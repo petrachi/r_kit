@@ -1,4 +1,4 @@
-module Blog
+module RKit
   module Decorable
     def decorate(view_context)
       @view_context = view_context
