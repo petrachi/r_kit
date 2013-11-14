@@ -11,7 +11,8 @@ Gem::Specification.new do |gem|
   gem.description   = %q{Library for rails projects}
   gem.summary       = %q{Code library for rails : ruby core extend / rails helpers / css / js}
   gem.homepage      = "https://github.com/petrachi/r_kit"
-
+  gem.license       = 'MIT'
+  
   gem.files         = `git ls-files`.split($/)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
