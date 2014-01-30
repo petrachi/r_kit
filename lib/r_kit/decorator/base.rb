@@ -1,3 +1,5 @@
+require 'delegate'
+
 class RKit::Decorator::Base < SimpleDelegator
   def initialize base, view_context
     @view_context = view_context
