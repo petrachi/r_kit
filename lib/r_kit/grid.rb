@@ -1,5 +1,7 @@
 module RKit::Grid
-  require "r_kit/grid/action_view_extension"
+  def self.init!
+    require "r_kit/grid/action_view_extension"
   
-  ActionView::Base.send :include, ActionViewExtension
+    ActionView::Base.send :include, ActionViewExtension
+  end
 end

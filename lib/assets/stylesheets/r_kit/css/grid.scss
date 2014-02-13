@@ -23,7 +23,7 @@
 			
 			@for $i from 1 through 12 {
 			  .col-#{$i} { @include col($base_width, $i); }
-			  .off-#{$i} { @include off($base_width, $i); }
+			  [class*=col-].off-#{$i} { @include off($base_width, $i); }
 			}
 		}
 	}
