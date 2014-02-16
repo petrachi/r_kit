@@ -3,14 +3,8 @@ h2,
 h3{
 	font-weight: 200;
 	margin: 1em 0;
-	
-	a{
-		@include unstyled-link();
-		
-		&:hover{
-			text-decoration: none;
-		}
-	}
+  
+  @include link-styled-title;
 }
 
 h1{

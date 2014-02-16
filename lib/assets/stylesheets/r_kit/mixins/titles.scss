@@ -1,0 +1,18 @@
+@mixin link-styled-title() {
+	a{
+    @include unstyled-link();
+    
+		&:hover{
+			opacity: .75;
+      text-decoration: none;
+		}
+	}
+}
+
+@mixin link-unstyled-title() {
+	a{
+		&:hover{
+			opacity: 1;
+		}
+	}
+}
