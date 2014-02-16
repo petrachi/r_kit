@@ -7,8 +7,14 @@ module RKit::Grid::ActionViewExtension
   
   def html_options options = {}, defaults = {}
     id = options[:id]
-    classes = "#{ defaults[:class] } #{ options[:class] }"
-    classes += " off-#{ options[:offset] }" if options[:offset]
+    
+    classes = [defaults[:class], options[:class]]
+    classes << "off-#{ options[:offset] }" if options[:offset]
+    classes = classes
+      .compact
+      .map(&:to_s)
+      .map(&:dasherize)
+      .join " "
     
     {
       :id => id,
@@ -31,7 +37,7 @@ module RKit::Grid::ActionViewExtension
     proc_options options[:instance], options
     html_options = html_options(options, {class: "col-#{ options[:col_size] }"})
     
-    content_tag(options[:tag] || :div, html_options){ block.call(options[:instance]) }
+    content_tag(options[:tag] || :div, html_options){ block.call(*options[:instance]) }
   end
   
   
@@ -51,6 +57,7 @@ module RKit::Grid::ActionViewExtension
   
   def rows__tag col_size, collection, options = {}, &block
     rows_buffer = collection
+      .to_a
       .in_groups_of(12 / col_size, false)
       .inject ActiveSupport::SafeBuffer.new do |safe_buffer, collection|
         safe_buffer.safe_concat send("row_#{ col_size }_tag", collection, options, &block)
