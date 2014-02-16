@@ -18,8 +18,8 @@ module RKit::Decorator::ActiveRecordExtension
   end
   
   module InstanceMethods
-    def decorate view_context
-      self.class.decorator_class.new self, view_context
+    def decorate view_context, instance_variables = {}
+      self.class.decorator_class.new self, view_context, instance_variables
     end
   end
 end
