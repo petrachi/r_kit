@@ -8,8 +8,8 @@ Gem::Specification.new do |gem|
   gem.version       = RKit::VERSION
   gem.authors       = ["Thomas Petrachi"]
   gem.email         = ["thomas.petrachi@vodeclic.com"]
-  gem.description   = %q{Library for rails projects}
-  gem.summary       = %q{Code library for rails : ruby core extend / rails helpers / css / js}
+  gem.description   = %q{Rails tools box}
+  gem.summary       = %q{Rails tools box : Core extentions, Pagination, Decorator, CSS, Javascript, and others comming. A flexible gem that hold a number of basics services for rails applications.}
   gem.homepage      = "https://github.com/petrachi/r_kit"
   gem.license       = 'MIT'
   

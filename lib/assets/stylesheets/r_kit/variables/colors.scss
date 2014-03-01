@@ -4,6 +4,7 @@ $secondary-color: skyblue !default;
 // need here defaults colors
 // colors needed : success - warning - danger - info - muted
 // for each of : classic - text - background
+// look into theeses colors : cornflowerblue, firebrick, gold, limegreen
 
 /*
 $success-color
@@ -13,6 +14,7 @@ $info-color
 $muted-color
 */
 $text-color: #888 !default;
+$link-color: $secondary-color !default;
 /*$text-success-color
 $text-warning-color
 $text-danger-color
