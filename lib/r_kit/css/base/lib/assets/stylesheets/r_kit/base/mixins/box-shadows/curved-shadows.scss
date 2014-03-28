@@ -1,0 +1,34 @@
+@mixin base-horizontal-curved-shadow() {
+  position: absolute;
+  width: 90%;
+  height: 10%;
+  left: 5%;
+  border-radius: 50%;
+  z-index: -1;
+  content: "";
+  box-shadow: 0 0 1em .25em black;
+}
+
+
+@mixin top-curved-shadow() {
+  position: relative;
+  
+  &:before {
+    @include base-horizontal-curved-shadow;
+    top: 0%;
+  }
+}
+
+@mixin bottom-curved-shadow() {
+  position: relative;
+  
+  &:after {
+    @include base-horizontal-curved-shadow;
+    bottom: 0%;
+  }
+}
+
+@mixin horizontal-curved-shadow() {
+  @include top-curved-shadow;
+  @include bottom-curved-shadow;
+}

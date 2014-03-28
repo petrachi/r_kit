@@ -1,0 +1,21 @@
+.text-left,
+.text-left p:not([class*=text-]),
+[class*=text-] .text-left,
+[class*=text-] .text-left p:not([class*=text-]) { 
+  text-align: left; 
+}
+
+.text-center,
+.text-center p:not([class*=text-]),
+[class*=text-] .text-center,
+[class*=text-] .text-center p:not([class*=text-]) { 
+  text-align: center; 
+}
+
+
+.text-right,
+.text-right p:not([class*=text-]),
+[class*=text-] .text-right,
+[class*=text-] .text-right p:not([class*=text-]) { 
+  text-align: right; 
+}

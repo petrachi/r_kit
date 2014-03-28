@@ -1,0 +1,32 @@
+@mixin col($base_width, $col_size){
+	margin: 0 $base_width;
+	width: $base_width * 8 * $col_size - 2 * $base_width;
+	flex-shrink: 0;
+}
+
+@mixin off($base_width, $off_size){
+	margin-left: $base_width * 8 * $off_size + 1 * $base_width;
+}
+
+@mixin grid($base_width: 12px){
+	
+	.container{
+		margin: auto;
+		width: $base_width * 8 * 12 - 2 * $base_width;
+		
+		.row{
+			display: flex;
+			flex-wrap: wrap;
+			align-items: baseline;
+			
+			margin: 0 -#{$base_width};
+			
+			@for $i from 1 through 12 {
+			  .col-#{$i} { @include col($base_width, $i); }
+			  [class*=col-].off-#{$i} { @include off($base_width, $i); }
+			}
+		}
+	}
+}
+
+@include grid();
