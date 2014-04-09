@@ -1,5 +1,5 @@
-$primary-color: #b62b2b !default;
-$secondary-color: cornflowerblue !default;
+$primary-color: primary-color() !default;
+$secondary-color: secondary-color() !default;
 
 // need here defaults colors
 // colors needed : success - warning - danger - info - muted

@@ -1,4 +1,4 @@
-class RKit::Css::Base
+class RKit::CssBase
   class Engine < Rails::Engine
   end
 end
