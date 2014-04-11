@@ -1,5 +1,5 @@
 $primary-color: primary-color() !default;
-$secondary-color: secondary-color() !default;
+// $secondary-color: secondary-color() !default;
 
 // need here defaults colors
 // colors needed : success - warning - danger - info - muted
@@ -13,25 +13,19 @@ $danger-color ?firebrick
 $info-color ?cornflowerblue
 $muted-color
 */
-$text-color: #888 !default;
-$link-color: $primary-color !default;
+$text-color: text-color() !default;
+$link-color: link-color() !default;
 /*$text-success-color
 $text-warning-color
 $text-danger-color
 $text-info-color
 $text-muted-color
 */
-$background-color: #111 !default;
-$background-alt-color: #181818 !default;
+$background-color: background-color() !default;
+// $background-alt-color: #181818 !default;
 /*$background-success-color
 $background-warning-color
 $background-danger-color
 $background-info-color
 $background-muted-color
 */
-
-// constants
-$white: #fbfbfb !default;
-$black: #111 !default;
-
-$shadow: rgba(black, .6) !default;

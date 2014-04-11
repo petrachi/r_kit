@@ -1,0 +1,67 @@
+@import "variables/grid";
+
+// make this a config option
+// should be px or rem
+// also, we could send the full length grid size wanted, and divide it in sass extend (to remember, there is full=base*(8*12-2) for full width, reverse is base=full/94)
+
+@import "base/grid";
+
+
+
+// reorganize assets in 'css' for basic grid css, then mixin, variables ... (like css base folders)
+// create a mixin 'col_prop' to add some css for all col and avoid '[class*=col-]' selector
+
+// add the folowing properties at row level then grid level (for the grid extend to encapsulate row extend)
+/*
+grid
+grid-row
+grid-col-x
+
+grid-items-center
+grid-items-top
+(default is baseline)
+
+grid-center (handle align)
+(default is left)
+(this is the flex, not the text-align)
+*/
+
+
+
+
+
+
+
+
+@mixin col($base_width, $col_size){
+	margin: 0 $base_width;
+	width: $base_width * 8 * $col_size - 2 * $base_width;
+	flex-shrink: 0;
+}
+
+@mixin off($base_width, $off_size){
+	margin-left: $base_width * 8 * $off_size + 1 * $base_width;
+}
+
+@mixin grid($base_width: 12px){
+
+	.container{
+		margin: auto;
+		width: $base_width * 8 * 12 - 2 * $base_width;
+
+		.row{
+			display: flex;
+			flex-wrap: wrap;
+			align-items: baseline;
+
+			margin: 0 -#{$base_width};
+
+			@for $i from 1 through 12 {
+			  .col-#{$i} { @include col($base_width, $i); }
+			  [class*=col-].off-#{$i} { @include off($base_width, $i); }
+			}
+		}
+	}
+}
+
+@include grid();
