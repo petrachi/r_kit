@@ -1,10 +1,9 @@
 class RKit::Css < RKit::Core
 
   with_engine __FILE__
+  with_sprockets
 
   load_path __FILE__, 'sass_extend.rb'
-  load_path __FILE__, 'sprockets_extend.rb'
-  # TODO: les sprocket doivent être share sur plusieurs services qui auront du css, voir s'il est possible de faire qqchose de bien à ce niveau, puis voir si on peut faire une dsl 'with_sprockets'
 
   config :colors, :primary_color, '#b62b2b'
   config :colors, :text_color, '#888'
@@ -12,6 +11,7 @@ class RKit::Css < RKit::Core
 
 
   alias_config :colors, :link_color, :background_color
+  alias_config :colors, :link_background_color, :primary_color
 
   #config :colors, :link_color, @_config[:colors][:background_color]
   #config :colors, :link_background_color, @_config[:colors][:primary_color]

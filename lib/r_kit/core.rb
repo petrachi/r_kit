@@ -2,10 +2,9 @@ class RKit::Core
 
   class << self
     def init!
-      @_config = {}
-      @_engine = RKit::Core::Engineer.new(self)
+      @_config = Configurer.new self
+      @_engine = Engineer.new self
       @_load_paths = []
-      @_preset = Hash.new{ |hash, key| hash[key] = Hash.new(&hash.default_proc) }
     end
 
     def inherited base
@@ -15,9 +14,9 @@ class RKit::Core
 
 
 
-    def dependency
+    #def dependency
       # TODO: if there is a depndency an it is not already loaded, load it and put a warning message
-    end
+    #end
 
 
 
@@ -25,41 +24,13 @@ class RKit::Core
       @_engine.pathname = Pathname.new(File.dirname(file)) + name.demodulize.underscore
     end
 
-
-
-    def config *name, default
-      @_config.deep_merge! [*name, default].reverse.inject{ |nested, key| Hash[key, nested] }
-    end
-
-    def alias_config *name, old_name
-      p @_config
-
-      new_name = name.pop
-      config = name.inject(@_config){ |config, nested| config = config[nested] }
-
-      config[new_name] = config[old_name]
-
-      # TODO: fail, this is cool of we keep default config, but if we change config in remote app "load", the alias value don't follow. we need to either, create a more real alias, or define alias in the "configure!" method
-
-      p config
-      p @_config
-    end
-
-    def configure! config
-      @_config.deep_merge! config
-      const_set :CONFIG, OpenStruct.new(@_config)
+    def with_sprockets
+      @_engine.sprockets = true
     end
 
 
-    def preset name, config
-      @_preset[name] = config
-    end
-
-    def preset! name
-      @_config.deep_merge! @_preset[name]
-      # TODO permettre de passer plusieurs preset (potentiellement complémentaires)
-    end
-
+    delegate :config, :alias_config, :preset,
+      to: :@_config
 
 
     def load_path file, path
@@ -68,16 +39,16 @@ class RKit::Core
     end
 
     def load!
-      @_engine.load!
       @_load_paths.each{ |path| require path }
 
       # TODO: save loaded services for the dependency method
     end
 
     def load config = {}
-      preset! config.delete(:preset)
-      configure! config
+      @_config.load! config
+      @_engine.load!
       load!
+      # TODO: the load_path loading logic will move someday in a "loader" core-class, smthng like that - and the same will probably goes for dependencies as well
     end
 
 
@@ -88,7 +59,7 @@ class RKit::Core
     end
 
     def digest
-      Digest::MD5.hexdigest @_config.sort.join
+      Digest::MD5.hexdigest @_config.fingerprint
     end
   end
 
@@ -98,6 +69,7 @@ class RKit::Core
 
   #extend Engineer
 
+  require 'r_kit/core/configurer.rb'
   require 'r_kit/core/engineer.rb'
 
   require 'r_kit/css.rb'

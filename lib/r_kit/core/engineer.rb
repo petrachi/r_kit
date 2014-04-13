@@ -1,18 +1,43 @@
 class RKit::Core::Engineer
-  attr_accessor :base, :pathname
+  attr_accessor :_base, :pathname, :sprockets
 
   def initialize base
-    @base = base
+    @_base = base
+    @sprocket = false
   end
 
-  def load!
-    if permit_load?
-      pathname = @pathname
-      base.const_set "Engine", Class.new(Rails::Engine){ paths.path = pathname }
+
+  def load_engine?
+    @pathname.present?
+  end
+
+  def load_engine!
+    pathname = @pathname
+
+    Class.new(Rails::Engine) do
+      paths.path = pathname
     end
   end
 
-  def permit_load?
-    @pathname.present?
+
+  def load_sprockets?
+    @sprockets
+  end
+
+  def load_sprockets!
+    digest = _base.digest
+    sprockets_extend = Module.new do
+      define_method "digest" do
+        super().update(digest)
+      end
+    end
+
+    Sprockets::Base.send :prepend, sprockets_extend
+  end
+
+
+  def load!
+    load_engine! if load_engine?
+    load_sprockets! if load_sprockets?
   end
 end
