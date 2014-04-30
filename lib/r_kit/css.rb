@@ -13,11 +13,6 @@ class RKit::Css < RKit::Core
   alias_config :colors, :link_color, :background_color
   alias_config :colors, :link_background_color, :primary_color
 
-  #config :colors, :link_color, @_config[:colors][:background_color]
-  #config :colors, :link_background_color, @_config[:colors][:primary_color]
-  # TODO: alias_config :nested_namespace:, :newname, :oldname
-
-
   # unused colors
   # config :colors, :secondary_color, 'cornflowerblue'
   # config :colors, :background_alt_color, '#181818'

@@ -1,9 +1,4 @@
 @import "variables/grid";
-
-// make this a config option
-// should be px or rem
-// also, we could send the full length grid size wanted, and divide it in sass extend (to remember, there is full=base*(8*12-2) for full width, reverse is base=full/94)
-
 @import "base/grid";
 
 
@@ -21,7 +16,7 @@ grid-items-center
 grid-items-top
 (default is baseline)
 
-grid-center (handle align)
+grid-center (handle align)@
 (default is left)
 (this is the flex, not the text-align)
 */

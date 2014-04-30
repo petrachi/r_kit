@@ -6,7 +6,15 @@ class RKit::Grid < RKit::Core
   load_path __FILE__, 'sass_extend.rb'
 
 
-  load_path __FILE__, 'tags.rb'
+  load_path __FILE__, 'base.rb'
+  load_path __FILE__, 'base/grid.rb'
+  load_path __FILE__, 'base/grid_col.rb'
+  load_path __FILE__, 'base/grid_row.rb'
+  load_path __FILE__, 'binding.rb'
+
+  #load_path __FILE__, 'enumerable_extend.rb'
+  #load_path __FILE__, 'kernel_extend.rb'
+  #load_path __FILE__, 'tags.rb'
   # TODO: full rework of this
 
   config :base_width, [0.75, ["rem"]]
