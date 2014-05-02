@@ -1,10 +1,7 @@
 class RKit::Grid < RKit::Core
 
   with_engine __FILE__
-  with_sprockets
-
-  load_path __FILE__, 'sass_extend.rb'
-
+  with_sprockets __FILE__
 
   load_path __FILE__, 'base.rb'
   load_path __FILE__, 'base/grid.rb'
@@ -12,15 +9,16 @@ class RKit::Grid < RKit::Core
   load_path __FILE__, 'base/grid_row.rb'
   load_path __FILE__, 'binding.rb'
 
-  #load_path __FILE__, 'enumerable_extend.rb'
-  #load_path __FILE__, 'kernel_extend.rb'
-  #load_path __FILE__, 'tags.rb'
-  # TODO: full rework of this
+  load_path __FILE__, 'enumerable_extend.rb', if: :enumerable_extend
+  load_path __FILE__, 'kernel_extend.rb', if: :kernel_extend
+
+
+  config :extends, true
+  alias_config :extends, :enumerable_extend
+  alias_config :extends, :kernel_extend
+
 
   config :base_width, [0.75, ["rem"]]
+  config :col_size, 3
 
-
-  # TODO: ??? - must be something like "view_dsl / controller_dsl / model_dsl / ..." - ???
-  # TODO: will must diferentiate include / extend dsl
-  # load_path __FILE__, 'action_view_extension.rb'
 end

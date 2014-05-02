@@ -4,7 +4,7 @@ class RKit::Core
     def init!
       @_config = Configurer.new self
       @_engine = Engineer.new self
-      @_load_paths = []
+      @_load = Loader.new self
     end
 
     def inherited base
@@ -24,8 +24,9 @@ class RKit::Core
       @_engine.pathname = Pathname.new(File.dirname(file)) + name.demodulize.underscore
     end
 
-    def with_sprockets
+    def with_sprockets file
       @_engine.sprockets = true
+      load_path file, 'sass_extend.rb'
     end
 
 
@@ -33,22 +34,14 @@ class RKit::Core
       to: :@_config
 
 
-    def load_path file, path
-      file.chomp! File.extname(file)
-      @_load_paths << File.expand_path(path, file)
-    end
+    delegate :load_path,
+      to: :@_load
 
-    def load!
-      @_load_paths.each{ |path| require path }
-
-      # TODO: save loaded services for the dependency method
-    end
 
     def load config = {}
       @_config.load! config
       @_engine.load!
-      load!
-      # TODO: the load_path loading logic will move someday in a "loader" core-class, smthng like that - and the same will probably goes for dependencies as well
+      @_load.load!
     end
 
 
@@ -63,14 +56,10 @@ class RKit::Core
     end
   end
 
-  #init!
-  #load_path __FILE__, 'engineer.rb'
-  #load!
-
-  #extend Engineer
 
   require 'r_kit/core/configurer.rb'
   require 'r_kit/core/engineer.rb'
+  require 'r_kit/core/loader.rb'
 
   require 'r_kit/css.rb'
   require 'r_kit/grid.rb'

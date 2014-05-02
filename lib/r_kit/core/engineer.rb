@@ -3,12 +3,11 @@ class RKit::Core::Engineer
 
   def initialize base
     @_base = base
-    @sprocket = false
   end
 
 
   def load_engine?
-    @pathname.present?
+    @pathname
   end
 
   def load_engine!

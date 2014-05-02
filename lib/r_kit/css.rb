@@ -1,9 +1,7 @@
 class RKit::Css < RKit::Core
 
   with_engine __FILE__
-  with_sprockets
-
-  load_path __FILE__, 'sass_extend.rb'
+  with_sprockets __FILE__
 
   config :colors, :primary_color, '#b62b2b'
   config :colors, :text_color, '#888'

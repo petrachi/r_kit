@@ -44,5 +44,5 @@ class RKit::Grid::Base
   def to_s
     _h.content_tag :div, _attributes, &method(:capture)
   end
-  
+
 end
