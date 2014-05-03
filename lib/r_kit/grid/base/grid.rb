@@ -13,7 +13,7 @@ class RKit::Grid::Base
 
     def required_bindings
       {
-        col_size: RKit::Grid::CONFIG.col_size,
+        col_size: RKit::Grid.config.col_size,
         attributes: {
           class: :grid
         }

@@ -64,10 +64,10 @@ class RKit::Core::Loader
         _base::CONFIG.send condition
       end
 
-      exec_statement condition
+      exec_statement statement, condition
     end
 
-    def exec_statement condition
+    def exec_statement statement, condition
       case statement
       when :if
         !!condition

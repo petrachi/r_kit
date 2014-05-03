@@ -14,8 +14,8 @@ class RKit::Grid < RKit::Core
 
 
   config :extends, true
-  alias_config :extends, :enumerable_extend
-  alias_config :extends, :kernel_extend
+  alias_config :enumerable_extend, :extends
+  alias_config :kernel_extend, :extends
 
 
   config :base_width, [0.75, ["rem"]]

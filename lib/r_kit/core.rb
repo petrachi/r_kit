@@ -62,6 +62,7 @@ class RKit::Core
   require 'r_kit/core/loader.rb'
 
   require 'r_kit/css.rb'
+  require 'r_kit/decorator.rb'
   require 'r_kit/grid.rb'
 
 end

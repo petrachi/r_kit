@@ -24,7 +24,6 @@ class RKit::Core::Configurer
 
   def load_config! config_options
     _config.deep_merge! config_options
-    _base.const_set :CONFIG, OpenStruct.new(_config)
   end
 
 
@@ -46,10 +45,17 @@ class RKit::Core::Configurer
   end
 
 
+  def load_public_accessor!
+    _base.const_set :CONFIG, OpenStruct.new(_config)
+    _base.define_singleton_method("config"){ self::CONFIG }
+  end
+
+
   def load! config
     load_preset! config.delete(:preset)
     load_config! config
     load_alias!
+    load_public_accessor!
   end
 
 
