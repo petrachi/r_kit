@@ -4,22 +4,36 @@ module RKit::Decorator::ActiveRecordExtend
   def acts_as_decorables base = nil, &block
     define_decorator base || block
     define_instance_methods
-
-    include InstanceMethods
   end
 
 
   def define_decorator arg
-    @decorator_klass = send "decorator_klass_from_#{ arg.class.name.underscore }", arg
+    @decorator_klass = decorator_klass_from arg
+  end
+
+
+  def decorator_klass_from arg
+    send "decorator_klass_from_#{ arg.class.name.underscore }", arg
   end
 
   def decorator_klass_from_nil_class *args
-    decorator_klass_from_class "#{ name }Decorator".constantize
+    decorator_klass_from "#{ name }Decorator".constantize
   end
 
-  def decorator_klass_form_class base
-# TODO: auto inheritance if needed
-    base
+  def decorator_klass_from_class base
+    if base <=> RKit::Decorator::Base
+      base
+    else
+      base.send :include, Module.new{ include refine(RKit::Decorator::Base){} }
+    end
+  end
+
+  def decorator_klass_from_module mod
+    namespace = (mod.name.deconstantize.presence || "Object").constantize
+    const_name = mod.name.demodulize
+
+    namespace.send :remove_const, const_name
+    namespace.const_set const_name, Class.new(RKit::Decorator::Base){ include mod }
   end
 
   def decorator_klass_from_proc block
@@ -29,17 +43,14 @@ module RKit::Decorator::ActiveRecordExtend
   end
 
 
-  def define_instance_methods
-    define_method "decorate" do |view_context, instance_variables = {}|
-      self.class.decorator_klass.new self, view_context, instance_variables
-    end
+  def decorate_all
+    all.map(&:decorate)
   end
 
 
-  # TODO: choose -> use that, or use define_method ???
-  module InstanceMethods
-    def decorate view_context, instance_variables = {}
-      self.class.decorator_class.new self, view_context, instance_variables
+  def define_instance_methods
+    define_method "decorate" do
+      self.class.decorator_klass.new self
     end
   end
 

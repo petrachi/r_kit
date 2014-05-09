@@ -1,9 +1,21 @@
 class RKit::Core::Loader
-  attr_accessor :_base, :load_paths
+  attr_accessor :_base, :load_paths, :dependencies
+
+  @@loaded = []
 
   def initialize base
     @_base = base
     @load_paths = []
+    @dependencies = []
+  end
+
+
+  def dependency dependency
+    dependencies << Dependency.new(_base, str: dependency)
+  end
+
+  def dependencies!
+    dependencies.each &:load!
   end
 
 
@@ -14,8 +26,20 @@ class RKit::Core::Loader
     load_paths << load_path
   end
 
+  def load_paths!
+    load_paths.each &:load!
+  end
+
+
+  def loaded!
+    @@loaded << _base.name.demodulize.underscore
+  end
+
+
   def load!
-    load_paths.each{ |path| path.load! }
+    dependencies!
+    load_paths!
+    loaded!
   end
 
 
@@ -74,6 +98,34 @@ class RKit::Core::Loader
       when :unless
         !condition
       end
+    end
+  end
+
+
+  class Dependency < String
+    attr_accessor :_base
+
+    def initialize base, str: ""
+      @_base = base
+
+      super str.to_s
+    end
+
+    def should_load?
+      !RKit::Core::Loader.class_variable_get(:@@loaded).include? self
+    end
+
+    def dependency!
+      warn %Q{
+WARNING - RKit::#{ classify } was implicitly loaded,
+  As a dependency for #{ _base }.
+  You may want to load it explicitly.
+      }
+      RKit.const_get(classify).load
+    end
+
+    def load!
+      dependency! if should_load?
     end
   end
 

@@ -13,13 +13,6 @@ class RKit::Core
     end
 
 
-
-    #def dependency
-      # TODO: if there is a depndency an it is not already loaded, load it and put a warning message
-    #end
-
-
-
     def with_engine file
       @_engine.pathname = Pathname.new(File.dirname(file)) + name.demodulize.underscore
     end
@@ -34,7 +27,7 @@ class RKit::Core
       to: :@_config
 
 
-    delegate :load_path,
+    delegate :load_path, :dependency,
       to: :@_load
 
 
@@ -61,6 +54,7 @@ class RKit::Core
   require 'r_kit/core/engineer.rb'
   require 'r_kit/core/loader.rb'
 
+  require 'r_kit/backtrace.rb'
   require 'r_kit/css.rb'
   require 'r_kit/decorator.rb'
   require 'r_kit/grid.rb'
