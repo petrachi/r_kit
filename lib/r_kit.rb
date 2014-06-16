@@ -1,6 +1,3 @@
-require "r_kit/core"
-require "r_kit/version"
-
 module RKit
 
   def inspect
@@ -11,7 +8,7 @@ module RKit
 
 
   def load *services
-    load_service_from Array.wrap(*services)
+    load_service_from Array.wrap(services)
   end
 
 
@@ -38,4 +35,8 @@ module RKit
 
 
   extend self
+
+
+  require "r_kit/core"
+  require "r_kit/version"
 end
