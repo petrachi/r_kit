@@ -3,13 +3,17 @@ class RKit::Css < RKit::Core
   with_engine __FILE__
   with_sprockets __FILE__
 
+  config :colors, :white, '#fbfbfb'
+
   config :colors, :primary_color, '#b62b2b'
   config :colors, :text_color, '#888'
   config :colors, :background_color, '#111'
 
 
-  alias_config :colors, :link_color, :background_color
-  alias_config :colors, :link_background_color, :primary_color
+  alias_config :colors, :btn_color, :background_color
+  alias_config :colors, :btn_background_color, :primary_color
+
+  alias_config :colors, :link_color, :primary_color
 
   # unused colors
   # config :colors, :secondary_color, 'cornflowerblue'

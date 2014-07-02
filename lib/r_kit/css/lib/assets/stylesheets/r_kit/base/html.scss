@@ -5,8 +5,8 @@ html{
 }
 
 body{
-	background-color: $background-color;
-	color: $text-color;
+	background-color: background-color();
+	color: text-color();
 
 	margin: 0 0 1em;
 }

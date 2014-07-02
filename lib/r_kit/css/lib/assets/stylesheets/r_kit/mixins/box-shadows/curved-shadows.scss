@@ -12,7 +12,7 @@
 
 @mixin top-curved-shadow() {
   position: relative;
-  
+
   &:before {
     @include base-horizontal-curved-shadow;
     top: 0%;
@@ -21,7 +21,7 @@
 
 @mixin bottom-curved-shadow() {
   position: relative;
-  
+
   &:after {
     @include base-horizontal-curved-shadow;
     bottom: 0%;
