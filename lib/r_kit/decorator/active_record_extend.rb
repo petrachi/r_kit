@@ -43,14 +43,14 @@ module RKit::Decorator::ActiveRecordExtend
   end
 
 
-  def decorate_all
-    all.map(&:decorate)
+  def decorate view_context: nil
+    all.map{ |record| record.decorate view_context: view_context }
   end
 
 
   def define_instance_methods
-    define_method "decorate" do
-      self.class.decorator_klass.new self
+    define_method "decorate" do |view_context: nil|
+      self.class.decorator_klass.new self, view_context: view_context
     end
   end
 
