@@ -37,6 +37,6 @@ module RKit
   extend self
 
 
-  require "r_kit/core"
-  require "r_kit/version"
+  require 'r_kit/core'
+  require 'r_kit/version'
 end

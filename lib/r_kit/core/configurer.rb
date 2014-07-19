@@ -19,7 +19,7 @@ class RKit::Core::Configurer
 
 
   def config *name, default
-    _config.deep_merge! [*name, default].reverse.inject{ |nested, key| Hash[key, nested] }
+    _config.deep_merge! [*name, default].reverse.reduce{ |nested, key| Hash[key, nested] }
   end
 
   def load_config! config_options
@@ -33,7 +33,7 @@ class RKit::Core::Configurer
 
   def alias *name, old_name
     new_name = name.pop
-    config = name.inject(_config){ |config, nested| config = config[nested] }
+    config = name.reduce(_config){ |config, nested| config = config[nested] }
 
     config[new_name] = config[old_name] if config[new_name].blank?
   end
@@ -47,7 +47,7 @@ class RKit::Core::Configurer
 
   def load_public_accessor!
     _base.const_set :CONFIG, OpenStruct.new(_config)
-    _base.define_singleton_method("config"){ self::CONFIG }
+    _base.define_singleton_method('config'){ self::CONFIG }
   end
 
 

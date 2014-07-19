@@ -34,7 +34,7 @@ module Kernel
   end
 
 
-  if RubyVM.const_defined? "DebugInspector"
+  if RubyVM.const_defined? 'DebugInspector'
     alias :backtrace :_backtrace_from_ruby_vm
   else
     require 'continuation'

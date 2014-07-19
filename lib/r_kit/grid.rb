@@ -18,7 +18,7 @@ class RKit::Grid < RKit::Core
   alias_config :kernel_extend, :extends
 
 
-  config :base_width, [0.75, ["rem"]]
+  config :base_width, [0.75, ['rem']]
   config :col_size, 3
 
 end

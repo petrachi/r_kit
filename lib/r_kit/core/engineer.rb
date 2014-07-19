@@ -26,7 +26,7 @@ class RKit::Core::Engineer
   def load_sprockets!
     digest = _base.digest
     sprockets_extend = Module.new do
-      define_method "digest" do
+      define_method 'digest' do
         super().update(digest)
       end
     end

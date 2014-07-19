@@ -7,7 +7,7 @@ class RKit::Grid::Base
   end
 
   def required_bindings
-    raise NotImplemented, "Subclasses must implement this method"
+    raise NotImplemented, 'Subclasses must implement this method'
   end
 
 
@@ -16,7 +16,7 @@ class RKit::Grid::Base
   end
 
   def _attributes
-    raise NotImplemented, "Subclasses must implement this method"
+    raise NotImplemented, 'Subclasses must implement this method'
   end
 
 
@@ -38,7 +38,7 @@ class RKit::Grid::Base
 
 
   def capture
-    raise NotImplemented, "Subclasses must implement this method"
+    raise NotImplemented, 'Subclasses must implement this method'
   end
 
   def to_s
