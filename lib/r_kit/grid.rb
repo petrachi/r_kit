@@ -1,4 +1,4 @@
-class RKit::Grid < RKit::Core
+class RKit::Grid
 
   with_engine __FILE__
   with_sprockets __FILE__

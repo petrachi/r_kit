@@ -3,6 +3,15 @@ class RKit::Core::Loader
 
   @@loaded = []
 
+  def self.loaded
+    @@loaded.map{ |name| name.demodulize.underscore }
+  end
+
+  def self.loaded? name
+    @@loaded.include? name
+  end
+
+
   def initialize base
     @_base = base
     @load_paths = []
@@ -32,7 +41,7 @@ class RKit::Core::Loader
 
 
   def loaded!
-    @@loaded << _base.name.demodulize.underscore
+    @@loaded << _base.name
   end
 
 

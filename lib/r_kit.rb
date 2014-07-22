@@ -39,4 +39,13 @@ module RKit
 
   require 'r_kit/core'
   require 'r_kit/version'
+
+
+  Dir[File.join(File.dirname(__FILE__), "r_kit", "*.rb")].each do |file|
+    basename = File.basename file, ".rb"
+
+    if ["core", "version"].exclude? basename
+      const_set basename.classify, Class.new(RKit::Core){}
+    end
+  end
 end

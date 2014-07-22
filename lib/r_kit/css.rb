@@ -1,4 +1,4 @@
-class RKit::Css < RKit::Core
+class RKit::Css
 
   with_engine __FILE__
   with_sprockets __FILE__

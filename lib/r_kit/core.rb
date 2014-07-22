@@ -31,16 +31,25 @@ class RKit::Core
       to: :@_load
 
 
-    def load config = {}
+    def loaded?
+      RKit::Core::Loader.loaded? name
+    end
+
+    def load! config
+      require "#{ name.underscore }.rb"
+
       @_config.load! config
       @_engine.load!
       @_load.load!
     end
 
+    def load config = {}
+      load! config if !loaded?
+    end
 
 
     def inspect
-      "#{ name } config_w/#{ @_config.inspect }"
+      "#{ name } config_w/#{ @_config.inspect } loaded/#{ loaded? }"
       # TODO: add link to doc
     end
 
@@ -53,10 +62,5 @@ class RKit::Core
   require 'r_kit/core/configurer.rb'
   require 'r_kit/core/engineer.rb'
   require 'r_kit/core/loader.rb'
-
-  require 'r_kit/backtrace.rb'
-  require 'r_kit/css.rb'
-  require 'r_kit/decorator.rb'
-  require 'r_kit/grid.rb'
 
 end
