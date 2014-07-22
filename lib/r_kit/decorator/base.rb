@@ -1,7 +1,16 @@
 require 'delegate'
 
 class RKit::Decorator::Base < SimpleDelegator
-  alias :_obj :__getobj__
+  def self.decorator_name
+    name.demodulize.sub(/Decorator$/, '').underscore
+  end
+
+  def self.inherited subclass
+    subclass.class_eval do
+      alias :"#{ decorator_name }" :__getobj__
+    end
+  end
+
 
   def initialize obj, view_context: nil
     @_view_context = view_context

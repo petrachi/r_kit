@@ -24,12 +24,17 @@ module RKit::Decorator::ActiveRecordExtend
     if base <=> RKit::Decorator::Base
       base
     else
-      base.send :include, Module.new{ include refine(RKit::Decorator::Base){} }
+      base.tap do |base|
+        base.send :include, Module.new{ include refine(RKit::Decorator::Base){} }
+        base.extend Module.new{ include refine(RKit::Decorator::Base.singleton_class){} }
+
+        RKit::Decorator::Base.inherited base
+      end
     end
   end
 
   def decorator_klass_from_module mod
-    namespace = (mod.name.deconstantize.presence || "Object").constantize
+    namespace = (mod.name.deconstantize.presence || 'Object').constantize
     const_name = mod.name.demodulize
 
     namespace.send :remove_const, const_name
@@ -37,7 +42,7 @@ module RKit::Decorator::ActiveRecordExtend
   end
 
   def decorator_klass_from_proc block
-    (name.deconstantize.presence || "Object")
+    (name.deconstantize.presence || 'Object')
       .constantize
       .const_set "#{ name.demodulize }Decorator", Class.new(RKit::Decorator::Base, &block)
   end
@@ -49,7 +54,7 @@ module RKit::Decorator::ActiveRecordExtend
 
 
   def define_instance_methods
-    define_method "decorate" do |view_context: nil|
+    define_method 'decorate' do |view_context: nil|
       self.class.decorator_klass.new self, view_context: view_context
     end
   end
