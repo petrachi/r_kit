@@ -14,7 +14,7 @@ class RKit::Grid::Binding
 
   def block= block
     if block
-      @view_context = block.binding.eval("self")
+      @view_context = block.binding.eval('self')
       @block = block
     end
   end
@@ -51,29 +51,38 @@ class RKit::Grid::Binding
     end
 
 
+    # TODO: Allow to take only a proc (so not a hash)
+    # TODO: OR a single symbol (and we use that to send a method on the object)
+    # TODO: Tha last one can be replaced (or duplicated) by a "respond_to?" automatically triggered from here
     def attributes= attributes
       @attributes.merge!(attributes) do |key, old_value, new_value|
         Array.wrap(old_value) + Array.wrap(new_value)
       end
     end
 
-    def attributes
-      @computed ||= @attributes.each_with_object({}) do |(key, value), public_attributes|
-        public_attributes[process(key)] = process(value)
+    # TODO: @computed need to be back, we compute what can be, the procs or methods will be calc each time
+    def attributes object = nil
+      #@computed ||=
+      @attributes.each_with_object({}) do |(key, value), public_attributes|
+        public_attributes[process(key, object)] = process(value, object)
       end
     end
 
 
-    def process value
+    def process value, object = nil
       case value
       when Proc
-        process(value.call)
+        proc_value = case value.arity
+        when 1 then value.call(object)
+        else value.call
+        end
+        process(proc_value, object)
       when Array
-        value.map{ |unique_value| process(unique_value) }.join(" ")
+        value.map{ |unique_value| process(unique_value, object) }.join(' ')
       when String, Symbol
         value.to_s.dasherize
       else
-        raise ArgumentError, "Must be Array, Proc or String/Symbol"
+        raise ArgumentError, 'Must be Array, Proc or String/Symbol'
       end
     end
   end

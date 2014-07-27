@@ -16,7 +16,7 @@ class RKit::Grid::Base
     end
 
     def _attributes
-      _binding.col_attributes
+      _binding.col_attributes object
     end
 
     def capture
