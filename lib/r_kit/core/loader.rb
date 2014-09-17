@@ -20,7 +20,7 @@ class RKit::Core::Loader
 
 
   def dependency dependency
-    dependencies << Dependency.new(_base, str: dependency)
+    dependencies << Dependency.new(_base, service: dependency)
   end
 
   def dependencies!
@@ -111,26 +111,25 @@ class RKit::Core::Loader
   end
 
 
-  class Dependency < String
-    attr_accessor :_base
+  class Dependency
+    attr_accessor :base, :service
 
-    def initialize base, str: ""
-      @_base = base
-
-      super str.to_s
+    def initialize base, service:;
+      @base = base
+      @service = RKit.const_get(service.to_s.classify)
     end
 
     def should_load?
-      !RKit::Core::Loader.class_variable_get(:@@loaded).include? self
+      !RKit::Core::Loader.class_variable_get(:@@loaded).include? @service.name
     end
 
     def dependency!
       warn %Q{
-WARNING - RKit::#{ classify } was implicitly loaded,
-  As a dependency for #{ _base }.
+WARNING - #{ @service.name } was implicitly loaded,
+  As a dependency for #{ base }.
   You may want to load it explicitly.
       }
-      RKit.const_get(classify).load
+      @service.load
     end
 
     def load!

@@ -6,7 +6,7 @@ module RKit::Decorator::ActiveRecordExtend
     define_instance_methods
   end
 
-
+  # TODO: all the methods below this comment should be private, even more, they should be in a "decorator_finder_creator_definer", and not included in active_record. SRP guys !
   def define_decorator arg
     @decorator_klass = decorator_klass_from arg
   end

@@ -9,6 +9,7 @@ class RKit::Decorator::Base < SimpleDelegator
     subclass.class_eval do
       alias :"#{ decorator_name }" :__getobj__
     end
+    super
   end
 
 

@@ -7,8 +7,8 @@ class RKit::Core
       @_load = Loader.new self
     end
 
-    def inherited base
-      base.init!
+    def inherited subclass
+      subclass.init!
       super
     end
 
