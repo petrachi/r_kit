@@ -8,9 +8,9 @@ class RKit::ActiveRecordUtility::Utility
   end
 
 
-  def interfere
+  def interfere *args
     if can_interfere?
-      interfere!
+      interfere! *args
       interfered!
     else
       raise DatabaseSchemaError.new(base, method: method) unless running_script? /^rake db:/
@@ -32,22 +32,18 @@ class RKit::ActiveRecordUtility::Utility
   end
 
 
-  module SingletonInheritance
-    def self.extended base
-      base.instance_variable_set :@extended, []
-    end
-
+  class << self
     def interfered? base
-      @extended.include? base
+      @interfered.include? base
     end
 
     def interfered base
-      @extended << base
+      @interfered << base
     end
-  end
 
-  def self.inherited(subclass)
-    subclass.extend SingletonInheritance
-    super
+    def inherited subclass
+      subclass.instance_variable_set :@interfered, []
+      super
+    end
   end
 end

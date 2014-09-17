@@ -18,6 +18,8 @@ class RKit::Decorator::Base < SimpleDelegator
     super obj
   end
 
+  delegate :class, to: :__getobj__
+
 
   def _view_context
     backtrace{ |obj| obj.is_a? ActionView::Base } || backtrace{ |obj| obj.respond_to? :view_context }.view_context

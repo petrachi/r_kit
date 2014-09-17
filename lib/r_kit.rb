@@ -6,7 +6,10 @@ module RKit
     # some kind of "--help" of unix commands
   end
 
+  delegate :loaded, to: 'RKit::Core::Loader'
 
+
+  
   def load *services
     load_service_from Array.wrap(services)
   end

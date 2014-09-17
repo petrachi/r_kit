@@ -120,16 +120,16 @@ class RKit::Core::Loader
     end
 
     def should_load?
-      !RKit::Core::Loader.class_variable_get(:@@loaded).include? @service.name
+      !service.loaded?
     end
 
     def dependency!
       warn %Q{
-WARNING - #{ @service.name } was implicitly loaded,
+WARNING - #{ service.name } was implicitly loaded,
   As a dependency for #{ base }.
   You may want to load it explicitly.
       }
-      @service.load
+      service.load
     end
 
     def load!

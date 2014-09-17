@@ -6,10 +6,15 @@ class RKit::ActiveRecordUtility
   load_path __FILE__, 'utility.rb'
 
   UTILITIES = {
+    pool: :acts_as_poolables,
     tag: :acts_as_taggables,
   }
 
+
+  config :all, true
+
   UTILITIES.each do |utility, _|
-    load_path __FILE__, "utility/#{ utility }.rb"
+    alias_config utility, :all
+    load_path __FILE__, "utility/#{ utility }.rb", if: utility
   end
 end
