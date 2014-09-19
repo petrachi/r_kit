@@ -1,5 +1,5 @@
 class RKit::Utility
-  UTILITIES = %i{array hash kernel symbol}
+  UTILITIES = %i{array hash kernel string symbol}
 
 
   config :extends, true
