@@ -7,6 +7,8 @@ class RKit::ActiveRecordUtility
 
   UTILITIES = {
     pool: :acts_as_poolables,
+    publisher: :acts_as_publishables,
+    series: :acts_as_seriables,
     tag: :acts_as_taggables,
   }
 

@@ -1,9 +1,9 @@
 class DatabaseSchemaError < StandardError
-  def initialize base, method:;
+  def initialize base, method_name:;
     super %Q{
-WARNING - You tried to use the '#{ method }' DSL on '#{ base }',
-  You may want to create a 'tag' column first.
-  To do so, please refer to the 'RKit::ActiveRecordUtlity' documentation.
+WARNING - You tried to use the '#{ method_name }' DSL on '#{ base }',
+  Your database is not ready for it yet,
+  You can refer to the 'RKit::ActiveRecordUtlity' documentation.
     }
   end
 end
