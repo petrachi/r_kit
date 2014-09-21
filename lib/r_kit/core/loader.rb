@@ -123,6 +123,7 @@ class RKit::Core::Loader
       !service.loaded?
     end
 
+    # TODO: The dependency warning msg should be in service object
     def dependency!
       warn %Q{
 WARNING - #{ service.name } was implicitly loaded,

@@ -1,4 +1,5 @@
 module RKit::Decorator::ActiveRecordExtend
+
   attr_accessor :decorator_klass
 
   def acts_as_decorables base = nil, &block
@@ -9,6 +10,7 @@ module RKit::Decorator::ActiveRecordExtend
   # TODO: all the methods below this comment should be private, even more, they should be in a "decorator_finder_creator_definer", and not included in active_record. SRP guys !
   def define_decorator arg
     @decorator_klass = decorator_klass_from arg
+    @decorator_klass
   end
 
 
@@ -27,8 +29,8 @@ module RKit::Decorator::ActiveRecordExtend
       base.tap do |base|
         base.send :include, Module.new{ include refine(RKit::Decorator::Base){} }
         base.extend Module.new{ include refine(RKit::Decorator::Base.singleton_class){} }
-
-        RKit::Decorator::Base.inherited base
+        base.instance_variable_set "@decorated_klass", self
+        base.class_eval{ alias :"#{ decorated_klass.demodulize.underscore }" :__getobj__ }
       end
     end
   end
@@ -38,16 +40,21 @@ module RKit::Decorator::ActiveRecordExtend
     const_name = mod.name.demodulize
 
     namespace.send :remove_const, const_name
-    namespace.const_set const_name, Class.new(RKit::Decorator::Base){ include mod }
+    namespace.const_set const_name, RKit::Decorator::Class.new(self){ include mod }
   end
 
   def decorator_klass_from_proc block
     (name.deconstantize.presence || 'Object')
       .constantize
-      .const_set "#{ name.demodulize }Decorator", Class.new(RKit::Decorator::Base, &block)
+      .const_set "#{ name.demodulize }Decorator", RKit::Decorator::Class.new(self, &block)
   end
 
-
+  # TODO: this couls move in "ennumerable", cause if the AR::relation is mapped into an array
+  # or if we create an array with decorables objects in it
+  # this will fail
+  # --
+  # in addition, make a "safe_decorate" for collections, wich will decorate if respond_to_decorate,
+  # and will not raise error
   def decorate view_context: nil
     all.map{ |record| record.decorate view_context: view_context }
   end
