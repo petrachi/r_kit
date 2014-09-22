@@ -19,6 +19,24 @@ class Module
   end
 
 
+  # TODO: these writter are called like ".name(value)" to set and return self
+  # or like ".name" to read
+  # TODO: to be used in 'pagination', these need an "after" callback (to set @limited_collection to nil)
+  # TODO: and to be used in 'grid (base.rb, binding_accessor)', these nees an "to" delegation object
+  def tap_attr_accessor *instance_variables_names
+    instance_variables_names.each do |instance_variable_name|
+      define_method instance_variable_name, ->(value = nil) do
+        if value
+          instance_variable_set "@#{ instance_variable_name }", value
+          self
+        else
+          instance_variable_get "@#{ instance_variable_name }"
+        end
+      end
+    end
+  end
+
+
   def singleton_attr_reader *args, **options
     singleton_class.send :attr_reader, *args, **options
   end

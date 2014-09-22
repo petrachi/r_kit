@@ -1,5 +1,9 @@
 class RKit::Core
 
+  # TODO: add a "warn" method, with a required 'if', that will display a warning msg if the condition is not fullfiled
+
+  # TODO: add a "description" method, wich will contain a descriptive text about the service
+
   class << self
     def init!
       @_config = Configurer.new self
@@ -23,6 +27,8 @@ class RKit::Core
     end
 
 
+    # TODO: define a method "config_get" that retreive the rkit config
+    # to do so, we will iterate throug the namespaces until we find somthing that inherit from RKit::Core
     delegate :config, :alias_config, :preset,
       to: :@_config
 

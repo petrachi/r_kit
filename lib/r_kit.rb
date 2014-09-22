@@ -9,7 +9,13 @@ module RKit
   delegate :loaded, to: 'RKit::Core::Loader'
 
 
-  
+  # TODO: add a load priority order based on dependencies
+  # so if :X depend on :Y
+  # and I load like ".load :x, :y"
+  # it does not trigger the warn msg of dependency cause we first try to load :x, and :y is still not loaded
+  # instead, we detect that dependencie, and reorder the loading (so we just "require the core descriptive file")
+  # to put :y before :x
+  # (double profit, this will keep config on :y, that iserwise would be lost)
   def load *services
     load_service_from Array.wrap(services)
   end
