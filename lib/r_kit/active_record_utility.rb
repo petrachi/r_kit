@@ -1,9 +1,11 @@
 class RKit::ActiveRecordUtility
   dependency :utilities
 
-  load_path __FILE__, 'active_record_extend.rb'
+  load_path __FILE__, 'base.rb'
   load_path __FILE__, 'database_schema_error.rb'
-  load_path __FILE__, 'utility.rb'
+
+  load_path __FILE__, 'active_record_extend.rb'
+
 
   UTILITIES = {
     pool: :acts_as_poolables,
@@ -17,6 +19,6 @@ class RKit::ActiveRecordUtility
 
   UTILITIES.each do |utility, _|
     alias_config utility, :all
-    load_path __FILE__, "utility/#{ utility }.rb", if: utility
+    load_path __FILE__, "base/#{ utility }.rb", if: utility
   end
 end

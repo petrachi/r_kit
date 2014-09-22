@@ -1,4 +1,4 @@
-class RKit::ActiveRecordUtility::Utility
+class RKit::ActiveRecordUtility::Base
 
   attr_accessor :base, :method_name
 

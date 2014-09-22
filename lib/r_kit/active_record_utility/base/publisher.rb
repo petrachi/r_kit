@@ -1,4 +1,4 @@
-class RKit::ActiveRecordUtility::Utility::Publisher < RKit::ActiveRecordUtility::Utility
+class RKit::ActiveRecordUtility::Base::Publisher < RKit::ActiveRecordUtility::Base
 
   instance_interferences do
     before_validation do

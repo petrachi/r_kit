@@ -1,4 +1,4 @@
-class RKit::ActiveRecordUtility::Utility::Series < RKit::ActiveRecordUtility::Utility
+class RKit::ActiveRecordUtility::Base::Series < RKit::ActiveRecordUtility::Base
 
   instance_interferences do
     has_one :followed, class_name: name, foreign_key: "following_id"
@@ -17,6 +17,8 @@ class RKit::ActiveRecordUtility::Utility::Series < RKit::ActiveRecordUtility::Ut
     # TODO: we can add a conditionnal validation on 'inclusion_in' (like pool)
 
     # TODO: validates presence of serie also on the followed record
+
+    # TODO: validates a record can only have one follower (or is it hadled by the "has_one" relation directly ?)
 
     validates_presence_of :series, if: :following
     validates_uniqueness_of :following_id, if: :following

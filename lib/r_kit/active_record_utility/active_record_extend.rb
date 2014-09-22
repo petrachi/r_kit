@@ -2,7 +2,7 @@ module RKit::ActiveRecordUtility::ActiveRecordExtend
 
   RKit::ActiveRecordUtility::UTILITIES.each do |utility, method_name|
     define_method method_name, ->(*args) do
-      RKit::ActiveRecordUtility::Utility.const_get(utility.classify).new(self, method_name: __method__).interfere *args
+      RKit::ActiveRecordUtility::Base.const_get(utility.classify).new(self, method_name: __method__).interfere *args
     end
   end
 
@@ -18,7 +18,7 @@ module RKit::ActiveRecordUtility::ActiveRecordExtend
 
 
   def interfered? utility
-    RKit::ActiveRecordUtility::Utility.const_get(utility.classify).interfered? self
+    RKit::ActiveRecordUtility::Base.const_get(utility.classify).interfered? self
   rescue NameError
     false
   end

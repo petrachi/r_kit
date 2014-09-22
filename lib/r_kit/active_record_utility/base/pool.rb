@@ -1,4 +1,4 @@
-class RKit::ActiveRecordUtility::Utility::Pool < RKit::ActiveRecordUtility::Utility
+class RKit::ActiveRecordUtility::Base::Pool < RKit::ActiveRecordUtility::Base
 
   instance_interferences do
     inclusion_in = interferences_options_get.fetch :in
@@ -8,10 +8,6 @@ class RKit::ActiveRecordUtility::Utility::Pool < RKit::ActiveRecordUtility::Util
 
     scope :pool, ->(pool){ pool && where(pool: pool) }
     scope :pools, ->{ group(:pool).pluck(:pool) }
-  end
-
-  class_interferences do
-    def to_param() tag end
   end
 
   decorator_interferences do

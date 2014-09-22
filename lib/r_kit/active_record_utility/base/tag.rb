@@ -1,4 +1,4 @@
-class RKit::ActiveRecordUtility::Utility::Tag < RKit::ActiveRecordUtility::Utility
+class RKit::ActiveRecordUtility::Base::Tag < RKit::ActiveRecordUtility::Base
 
   instance_interferences do
     validates_presence_of :tag
