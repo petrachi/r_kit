@@ -7,3 +7,11 @@
 	background-color: btn-background-color();
 	color: btn-color();
 }
+
+
+.btn-disabled{
+	@extend .btn;
+
+	background-color: btn-disabled-background-color();
+	color: btn-disabled-color();
+}

@@ -27,7 +27,7 @@ $text-info-color
 $text-muted-color
 */
 $background-color: background-color() !default;
-// $background-alt-color: #181818 !default;
+$background-alt-color: background-alt-color() !default;
 /*$background-success-color
 $background-warning-color
 $background-danger-color
