@@ -1,7 +1,7 @@
-module RKit::Decorator::ActionViewBaseExtend
+module RKit::Decoration::ActionViewBaseExtend
 
   def assign new_assigns
-    _decorate_assigns new_assigns if RKit::Decorator.config.auto_decoration
+    _decorate_assigns new_assigns if RKit::Decoration.config.auto_decoration
 
     super
   end

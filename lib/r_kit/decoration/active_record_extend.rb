@@ -1,4 +1,4 @@
-module RKit::Decorator::ActiveRecordExtend
+module RKit::Decoration::ActiveRecordExtend
 
   attr_accessor :decorator_klass
 
@@ -23,12 +23,12 @@ module RKit::Decorator::ActiveRecordExtend
   end
 
   def decorator_klass_from_class base
-    if base <=> RKit::Decorator::Base
+    if base <=> RKit::Decoration::Base
       base
     else
       base.tap do |base|
-        base.send :include, Module.new{ include refine(RKit::Decorator::Base){} }
-        base.extend Module.new{ include refine(RKit::Decorator::Base.singleton_class){} }
+        base.send :include, Module.new{ include refine(RKit::Decoration::Base){} }
+        base.extend Module.new{ include refine(RKit::Decoration::Base.singleton_class){} }
         base.instance_variable_set "@decorated_klass", self
         base.class_eval{ alias :"#{ decorated_klass.demodulize.underscore }" :__getobj__ }
       end
@@ -40,13 +40,13 @@ module RKit::Decorator::ActiveRecordExtend
     const_name = mod.name.demodulize
 
     namespace.send :remove_const, const_name
-    namespace.const_set const_name, RKit::Decorator::Class.new(self){ include mod }
+    namespace.const_set const_name, RKit::Decoration::Class.new(self){ include mod }
   end
 
   def decorator_klass_from_proc block
     (name.deconstantize.presence || 'Object')
       .constantize
-      .const_set "#{ name.demodulize }Decorator", RKit::Decorator::Class.new(self, &block)
+      .const_set "#{ name.demodulize }Decorator", RKit::Decoration::Class.new(self, &block)
   end
 
   # TODO: this couls move in "ennumerable", cause if the AR::relation is mapped into an array

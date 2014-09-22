@@ -9,7 +9,7 @@ Gem::Specification.new do |gem|
   gem.authors       = ["Thomas Petrachi"]
   gem.email         = ["thomas.petrachi@vodeclic.com"]
   gem.description   = %q{Rails tools box}
-  gem.summary       = %q{Rails tools box : Core extentions, Pagination, Decorator, CSS, Javascript, and others comming. A flexible gem that hold a number of basics services for rails applications.}
+  gem.summary       = %q{Rails tools box : Core extentions, Pagination, Decoration, CSS, Javascript, and others comming. A flexible gem that hold a number of basics services for rails applications.}
   gem.homepage      = "https://github.com/petrachi/r_kit"
   gem.license       = 'MIT'
 

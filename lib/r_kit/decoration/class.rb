@@ -1,4 +1,4 @@
-class RKit::Decorator::Class
+class RKit::Decoration::Class
 
   module OpenClass
     refine Class do
@@ -15,7 +15,7 @@ class RKit::Decorator::Class
   # ot should be able to accept a proc, a module, a class, or nil(autodetect)
   # -- While doing so, U could move the logic of Class.to_module && Module.to_class && Proc.to_class in "utilities" (or new rkit service)
   def self.new decorated_klass, &block
-    Class.new(RKit::Decorator::Base, decorated_klass: decorated_klass, &block).tap do |klass|
+    Class.new(RKit::Decoration::Base, decorated_klass: decorated_klass, &block).tap do |klass|
       klass.class_eval{ alias :"#{ decorated_klass.demodulize.underscore }" :__getobj__ }
     end
   end

@@ -1,4 +1,4 @@
-class RKit::Decorator
+class RKit::Decoration
 
   dependency :backtrace
 

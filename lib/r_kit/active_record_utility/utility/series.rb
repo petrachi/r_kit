@@ -93,13 +93,13 @@ class RKit::ActiveRecordUtility::Utility::Series < RKit::ActiveRecordUtility::Ut
       end
     end
 
-    # TODO: put default locales keys (vol hard coded text) in cluster
+    # TODO: put default locales keys ("vol" is hard coded here) in cluster
     # same for the 'title' methods before
     # TODO: the "disabled" link for self doesn't work yet
     # in fact, the collection does not use the "self" object, so the singleton_class is lost
     def pagination_tag
       disable_pagination_link self
-      series.collection.map(&:pagination_link_to).reduce(:safe_concat)
+      series.collection.decorate.map(&:pagination_link_to).reduce(:safe_concat)
     end
 
     def pagination_link_to
