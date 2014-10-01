@@ -4,4 +4,9 @@ class String
     !!(self =~ /^(true|t|yes|y|1)$/i)
   end
 
+
+  def to_ivar
+    "@#{ self }"
+  end
+
 end

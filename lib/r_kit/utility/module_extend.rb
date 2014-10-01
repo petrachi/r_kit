@@ -5,16 +5,16 @@ class Module
 
 
   alias :basic_attr_reader :attr_reader
-  def attr_reader *instance_variables_names, default_proc: nil, default: nil
+  def attr_reader *names, default: nil
     if default_proc || default
-      instance_variables_names.each do |instance_variable_name|
-        define_method instance_variable_name do
-          instance_variable_get("@#{ instance_variable_name }") ||
-            instance_variable_set("@#{ instance_variable_name }", default_proc.try(:call, self) || default)
+      names.each do |name|
+        define_method name do
+          instance_variable_get("@#{ name }") ||
+            instance_variable_set("@#{ name }", default.is_a?(Proc) ? default.call(self, name) : default)
         end
       end
     else
-      basic_attr_reader *instance_variables_names
+      basic_attr_reader *names
     end
   end
 
@@ -23,14 +23,14 @@ class Module
   # or like ".name" to read
   # TODO: to be used in 'pagination', these need an "after" callback (to set @limited_collection to nil)
   # TODO: and to be used in 'grid (base.rb, binding_accessor)', these need an "to" delegation object
-  def tap_attr_accessor *instance_variables_names
-    instance_variables_names.each do |instance_variable_name|
-      define_method instance_variable_name, ->(value = nil) do
+  def tap_attr_accessor *names
+    names.each do |name|
+      define_method name, ->(value = nil) do
         if value
-          instance_variable_set "@#{ instance_variable_name }", value
+          instance_variable_set "@#{ name }", value
           self
         else
-          instance_variable_get "@#{ instance_variable_name }"
+          instance_variable_get "@#{ name }"
         end
       end
     end

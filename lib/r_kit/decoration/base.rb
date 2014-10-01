@@ -3,7 +3,7 @@ require 'delegate'
 class RKit::Decoration::Base < SimpleDelegator
 
   singleton_attr_reader :decorated_klass
-  singleton_attr_reader :after_initialize_procs, default_proc: proc{ [] }
+  singleton_attr_reader :after_initialize_procs, default: proc{ [] }
 
   def self.after_initialize &block
     after_initialize_procs << block

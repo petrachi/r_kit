@@ -1,3 +1,3 @@
 class Symbol
-  delegate :classify, to: :to_s
+  delegate :classify, :to_ivar, to: :to_s
 end
