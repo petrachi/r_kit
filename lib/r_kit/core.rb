@@ -66,7 +66,11 @@ class RKit::Core
 
 
   require 'r_kit/core/configurer.rb'
+
   require 'r_kit/core/engineer.rb'
+
   require 'r_kit/core/loader.rb'
+  require 'r_kit/core/loader/dependency.rb'
+  require 'r_kit/core/loader/load_path.rb'
 
 end
