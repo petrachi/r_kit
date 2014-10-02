@@ -5,7 +5,7 @@ class Array
   end
 
   def include_one? values
-    (self & Array(values)).size > 0 
+    (self & Array(values)).size > 0
   end
 
 end

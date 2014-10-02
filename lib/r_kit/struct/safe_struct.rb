@@ -2,7 +2,7 @@ class SafeStruct
 
   def self.new allowed:, defaults: {}
     Class.new do
-      @allowed = allowed.map(&:to_ivar)
+      @allowed = allowed.map(&:ivar)
       @defaults = defaults
 
       def self.allowed() @allowed end

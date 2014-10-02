@@ -6,7 +6,7 @@ class Module
 
   alias :basic_attr_reader :attr_reader
   def attr_reader *names, default: nil
-    if default_proc || default
+    if default
       names.each do |name|
         define_method name do
           instance_variable_get("@#{ name }") ||

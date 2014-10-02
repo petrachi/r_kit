@@ -5,7 +5,7 @@ class String
   end
 
 
-  def to_ivar
+  def ivar
     "@#{ self }"
   end
 

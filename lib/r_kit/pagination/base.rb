@@ -1,5 +1,7 @@
 class RKit::Pagination::Base < SimpleDelegator
 
+  # TODO: use collection delegator newly done in 'strcut'
+
   alias :collection :__getobj__
   alias :collection= :__setobj__
 

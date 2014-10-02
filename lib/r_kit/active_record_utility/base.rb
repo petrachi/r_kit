@@ -41,7 +41,7 @@ class RKit::ActiveRecordUtility::Base
       __class__.send "#{ interference }_interferences_proc"
     end
 
-    singleton_class.send :attr_reader, "#{ interference }_interferences_proc", default: proc{ Proc.new }
+    singleton_class.send :attr_reader, "#{ interference }_interferences_proc", default: proc{ Proc.new{} }
 
     define_singleton_method "#{ interference }_interferences", ->(&block) do
       instance_variable_set "@#{ interference }_interferences_proc", block
