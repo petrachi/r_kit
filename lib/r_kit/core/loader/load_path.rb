@@ -2,7 +2,7 @@ class LoadPath
   attr_accessor :_base,
     :file, :path, :priority, :conditions
 
-  def initialize base, file:, path:, priority: 99
+  def initialize base, file:, path:, priority: 1/0.0
     @_base = base
 
     @file = file
