@@ -21,6 +21,14 @@ class SafeStruct
       def instance_variable_set name, value
         super if __class__.allowed.include? name
       end
+
+
+      def to_hash
+        instance_variables.reduce({}) do |options, name|
+          options[name.lvar] = instance_variable_get name
+          options
+        end
+      end
     end
   end
 
