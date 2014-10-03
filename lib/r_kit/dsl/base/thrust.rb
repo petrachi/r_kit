@@ -2,12 +2,13 @@ class RKit::Dsl::Base
   module Thrust
 
     protected def thrust_dsl!
-      base = self.readonly
+      readonly = self.readonly
       name = @name
 
       @domain.send :define_singleton_method, @name do
-        instance_variable_get(name.ivar) ||
-          instance_variable_set(name.ivar, base)
+        (instance_variable_get(name.ivar) ||
+          instance_variable_set(name.ivar, readonly))
+            .tap{ |readonly| readonly.base = self }
       end
     end
 
@@ -32,7 +33,7 @@ class RKit::Dsl::Base
 
       @domain.send :define_singleton_method, "#{ @name }_params=" do |*args, &block|
         send(name).try_parameters(*args, &block)
-        send(name).extract_parameters *args, &block
+        send(name).extract_parameters self, *args, &block
       end
 
       @domain.send :define_singleton_method, "#{ @name }_params" do

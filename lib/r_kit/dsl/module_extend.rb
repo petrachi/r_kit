@@ -4,9 +4,16 @@ module RKit::Dsl::ModuleExtend
     extend RKit::Dsl::DslExtend
   end
 
+
   def acts_as *names
     names.each do |name|
       send "acts_as_#{ name }"
+    end
+  end
+
+  def try_to_acts_as *names
+    names.each do |name|
+      send "try_to_acts_as_#{ name }"
     end
   end
 

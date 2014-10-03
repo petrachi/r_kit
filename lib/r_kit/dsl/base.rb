@@ -29,6 +29,8 @@ class RKit::Dsl::Base
 
 
   def domain domain
+    raise DslDefinitionError.new(@base) if [@name, @method].none?
+
     @domain = domain
 
     thrust_dsl!
