@@ -8,4 +8,9 @@ class Array
     (self & Array(values)).size > 0
   end
 
+
+  def rotate_left
+    push shift
+  end
+
 end

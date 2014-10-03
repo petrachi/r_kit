@@ -9,4 +9,12 @@ class String
     "@#{ self }"
   end
 
+  def lvar
+    if self =~ /^@/
+      self[1..-1]
+    else
+      self
+    end
+  end
+
 end
