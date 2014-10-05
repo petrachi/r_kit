@@ -2,12 +2,14 @@ class LoadPath
   attr_accessor :_base,
     :file, :path, :priority, :conditions
 
-  def initialize base, file:, path:, priority: 1/0.0
+  def initialize base, file:, path:, **options
     @_base = base
 
     @file = file
     @path = path
-    @priority = priority
+
+    @priority = options.fetch :priority, 1/0.0
+    @conditions = options.slice :if, :unless
   end
 
 

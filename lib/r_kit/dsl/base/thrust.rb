@@ -24,7 +24,7 @@ class RKit::Dsl::Base
       end
 
       @base.send :define_singleton_method, @method do
-        @@dsls[name]
+        RKit::Dsl::Base.dsls[name]
       end
     end
 

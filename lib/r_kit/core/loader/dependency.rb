@@ -13,9 +13,9 @@ class Dependency
   # TODO: The dependency warning msg should be in service object
   def dependency!
     warn %Q{
-WARNING - #{ service.name } was implicitly loaded,
-As a dependency for #{ base }.
-You may want to load it explicitly.
+WARNING - #{ service.name } will be implicitly loaded,
+  As a dependency for #{ base }.
+  You may want to load it explicitly.
     }
     service.load
   end

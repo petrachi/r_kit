@@ -19,8 +19,12 @@ class RKit::Core::Loader
   end
 
 
-  def dependency dependency
-    dependencies << Dependency.new(_base, service: dependency)
+  # TODO: when a dependency is added, we must define in the opposite service a "dependency forbidden"
+  # TODO: in order to avoid recursive dependency
+  def dependency *services
+    services.each do |service|
+      dependencies << Dependency.new(_base, service: service)
+    end
   end
 
   def dependencies!
@@ -28,11 +32,10 @@ class RKit::Core::Loader
   end
 
 
-  def load_path file, path, **options
-    load_path = LoadPath.new _base, file: file, path: path, **options.slice(:priority)
-    load_path.conditions = options.slice :if, :unless
-
-    load_paths << load_path
+  def load_path file, *paths, **options
+    paths.each do |path|
+      load_paths << LoadPath.new(_base, file: file, path: path, **options.slice(:priority, :if, :unless))
+    end
   end
 
   def load_paths!

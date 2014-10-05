@@ -3,11 +3,12 @@ class RKit::Grid
   with_engine __FILE__
   with_sprockets __FILE__
 
-  load_path __FILE__, 'base.rb'
-  load_path __FILE__, 'base/grid.rb'
-  load_path __FILE__, 'base/grid_col.rb'
-  load_path __FILE__, 'base/grid_row.rb'
-  load_path __FILE__, 'binding.rb'
+  load_path __FILE__,
+    'base.rb',
+    'base/grid.rb',
+    'base/grid_col.rb',
+    'base/grid_row.rb',
+    'binding.rb'
 
   load_path __FILE__, 'enumerable_extend.rb', if: :enumerable_extend
   load_path __FILE__, 'kernel_extend.rb', if: :kernel_extend
