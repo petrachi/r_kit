@@ -1,6 +1,25 @@
 class RKit::ActiveRecordUtility::Base::Series < RKit::ActiveRecordUtility::Base
 
-  instance_interferences do
+  act_as_a_dsl
+
+  name :series_dsl
+  method :acts_as_seriables
+  domain ActiveRecord::Base
+
+  allowed? do
+    table_exists? &&
+      column_names.include_all?(["following_id", "series"]) &&
+      columns_hash["following_id"].type == :integer &&
+      columns_hash["series"].type == :string
+  end
+
+  restricted do
+    raise DatabaseSchemaError.new(self, method_name: series_dsl.method)
+  end
+
+
+
+  methods :class do
     has_one :followed, class_name: name, foreign_key: "following_id"
     belongs_to :following, class_name: name
 
@@ -35,7 +54,8 @@ class RKit::ActiveRecordUtility::Base::Series < RKit::ActiveRecordUtility::Base
     @@_active_record_utilities_series = {}
   end
 
-  class_interferences do
+
+  methods :instance do
     def series
       @@_active_record_utilities_series[read_attribute(:series)] ||= series_struct if read_attribute(:series)
       # TODO: if series cg-hanges, or new element added, series must be re-calculated
@@ -55,7 +75,8 @@ class RKit::ActiveRecordUtility::Base::Series < RKit::ActiveRecordUtility::Base
     end
   end
 
-  decorator_interferences do
+
+  methods :decorator do
     after_initialize do
       # TODO: this can't stay this way, if "serie" is pre-calculated
       # & shared accros instances & kept in memory (class variable)
@@ -132,10 +153,5 @@ class RKit::ActiveRecordUtility::Base::Series < RKit::ActiveRecordUtility::Base
   end
 
 
-  def can_interfere?
-    base.table_exists? &&
-      base.column_names.include_all?(["following_id", "series"]) &&
-      base.columns_hash["following_id"].type == :integer &&
-      base.columns_hash["series"].type == :string
-  end
+
 end
