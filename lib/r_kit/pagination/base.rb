@@ -1,13 +1,8 @@
-class RKit::Pagination::Base < SimpleDelegator
-
-  # TODO: use collection delegator newly done in 'strcut'
-
-  alias :collection :__getobj__
-  alias :collection= :__setobj__
+class RKit::Pagination::Base < CollectionDelegator
 
   attr_accessor :page, :per_page
 
-  # TODO: should raise an error if has "limit" or "offset" values
+  # TODO: should raise (todo custom error) an error if has "limit" or "offset" values
   def initialize collection, **options
     raise if collection.values.keys.include_one? [:limit, :offset]
 
@@ -15,18 +10,6 @@ class RKit::Pagination::Base < SimpleDelegator
 
     @page = options.fetch :page, 1
     @per_page = options.fetch :per_page, RKit::Pagination.config.per_page[collection.klass]
-  end
-
-  def method_missing method_name, *args, &block
-    closure = super
-
-    case closure
-    when collection.class
-      self.collection = closure
-      self
-    else
-      closure
-    end
   end
 
   tap_attr_accessor :page
@@ -46,8 +29,6 @@ class RKit::Pagination::Base < SimpleDelegator
     raise
   end
 
-
-  include Enumerable
 
   def limited_collection
     collection

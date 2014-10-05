@@ -1,11 +1,14 @@
 class RKit::Pagination
 
-  dependency :decoration
-  dependency :utility
+  dependency :decoration,
+    :dsl,
+    :struct,
+    :utility
 
 
-  load_path __FILE__, 'base.rb'
-  load_path __FILE__, 'base/page.rb'
+  load_path __FILE__,
+    'base.rb',
+    'base/page.rb'
 
   load_path __FILE__, 'active_record_extend.rb'
 
