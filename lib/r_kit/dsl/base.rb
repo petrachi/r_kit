@@ -4,6 +4,8 @@ class RKit::Dsl::Base
   def self.dsls
     @@dsls
   end
+  ::DSLS = @@dsls
+
 
   attr_accessor :base
 
@@ -19,6 +21,7 @@ class RKit::Dsl::Base
   end
 
 
+  # TODO: vérifier l'unicité du "name"
   def name name
     @name = name
   end
