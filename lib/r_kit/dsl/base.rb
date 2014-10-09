@@ -1,10 +1,10 @@
 class RKit::Dsl::Base
 
-  @@dsls = Hash.new{ |hash, key| hash[key] = Array.new }
+  @dsls = Hash.new{ |hash, key| hash[key] = Array.new }
   def self.dsls
-    @@dsls
+    @dsls
   end
-  ::DSLS = @@dsls
+  ::DSLS = @dsls
 
 
   attr_accessor :base
@@ -34,12 +34,16 @@ class RKit::Dsl::Base
   def domain domain
     raise DslDefinitionError.new(@base) if [@name, @method].none?
 
-    @domain = domain
+    @domain ||= domain
 
-    thrust_dsl!
-    thrust_dsl_interface!
-    thrust_dsl_options!
-    thrust_dsl_extend!
+    shadow :domain do |shadow_self|
+      shadow_self.instance_variable_set "@domain", domain
+
+      thrust_dsl!
+      thrust_dsl_interface!
+      thrust_dsl_options!
+      thrust_dsl_extend!
+    end
   end
 
 

@@ -53,7 +53,9 @@ class RKit::Dsl::Base
 
           instance_eval &send(name).methods[:class]
           class_eval &send(name).methods[:instance]
-          decorator_klass.class_eval &send(name).methods[:decorator] if respond_to? :decorator_klass
+          if respond_to?(:acts_as_decorables?) && acts_as_decorables?
+            decorator_class.class_eval &send(name).methods[:decorator]
+          end
 
           true
         end
