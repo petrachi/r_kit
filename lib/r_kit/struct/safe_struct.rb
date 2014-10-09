@@ -29,6 +29,9 @@ class SafeStruct
           options
         end
       end
+
+      delegate :slice,
+        to: :to_hash
     end
   end
 
