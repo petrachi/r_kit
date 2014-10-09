@@ -9,7 +9,7 @@ class RKit::Utility
 
   UTILITIES.each do |utility|
     alias_config "#{ utility }_extend", :extends
-    load_path __FILE__, "#{ utility }_extend.rb", if: "#{ utility }_extend"
+    load_path __FILE__, "#{ utility }_extend", if: "#{ utility }_extend"
   end
 
   # TODO: class_extend: to_module, ancestor=
@@ -23,4 +23,7 @@ class RKit::Utility
   # -> not true anymore for 'then', it's only in kernel now
   # TODO, maybe, we should create a module/feature, then include the modules into corresponding classes
   # TODO: and, this has the advantage to be more readable on a RKit::CONFIG point of view (POV)
+
+  # TODO: in Module: method "override", qui alias l'ancienne méthode, et redéfinit la nouvelle
+  # TODO: ou, qui crée un module, et le prepend, pour utiliser "super"
 end

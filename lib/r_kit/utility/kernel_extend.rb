@@ -1,14 +1,5 @@
 module Kernel
 
-  def __class__
-    self.class
-  end
-
-  def __namespace__
-    (__class__.name.deconstantize.presence || 'Object').constantize
-  end
-
-
   def running_script
     "#{ File.basename($0) } #{ ARGV.join " " }"
   end
@@ -30,8 +21,8 @@ module Kernel
   end
 
   def conditionnal_statement **options
-    options.slice(:if, :unless).reduce(true) do |continue, (statement, condition)|
-      continue && send(condition).tap do |closure|
+    options.slice(:if, :unless).reduce(true) do |continue, (statement, method_name)|
+      continue && send(method_name).tap do |closure|
         case statement
         when :if
           !!closure
@@ -40,6 +31,29 @@ module Kernel
         end
       end
     end
+  end
+
+
+
+  def shadow *names, &block
+    saved_state = names.reduce({}) do |saved_state, name|
+      saved_state[name] = instance_variable_get name.ivar
+      saved_state
+    end
+
+    closure = block.call(self)
+
+    names.each do |name|
+      instance_variable_set name.ivar, saved_state[name]
+    end
+
+    closure
+  end
+
+
+
+  def dont_respond_to? *args, &block
+    !respond_to? *args, &block
   end
 
 end

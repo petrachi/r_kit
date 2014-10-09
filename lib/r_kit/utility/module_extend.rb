@@ -1,7 +1,12 @@
 class Module
 
-  delegate :underscore, :demodulize,
+  delegate :deconstantize, :demodulize, :underscore,
     to: :name
+
+  def namespace
+    (deconstantize.presence || 'Object').constantize
+  end
+
 
 
   alias :basic_attr_reader :attr_reader
@@ -39,5 +44,21 @@ class Module
 
   def singleton_attr_reader *args, **options
     singleton_class.send :attr_reader, *args, **options
+  end
+
+
+  alias :basic_const_get :const_get
+  def const_get name, *args, default: nil
+    if default && !const_defined?(name)
+      name.safe_constantize ||
+        const_set(name, default)
+    else
+      basic_const_get name, *args
+    end
+  end
+
+  def const_replace name, value
+    remove_const name
+    const_set name, value
   end
 end
