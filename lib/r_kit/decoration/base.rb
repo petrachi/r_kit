@@ -1,35 +1,31 @@
-require 'delegate'
+module RKit::Decoration::Base
 
-class RKit::Decoration::Base < SimpleDelegator
-
-  singleton_attr_reader :decorated_klass
-  singleton_attr_reader :after_initialize_procs, default: proc{ [] }
-
-  def self.after_initialize &block
-    after_initialize_procs << block
+  def initialize object, view_context: nil
+    @view_context = view_context
+    super object
   end
 
-  def initialize obj, view_context: nil
-    @_view_context = view_context
-    super obj
-
-    decorator_klass.after_initialize_procs.each{ |after_initialize_proc| self.instance_eval &after_initialize_proc }
-  end
-
-  alias :decorator_klass :class
+  alias :decorator_class :class
   delegate :class, to: :__getobj__
 
 
-  def _view_context
+  def decorate *args
+    self
+  end
+
+  def decorated?() true end
+
+  def raw
+    __getobj__
+  end
+
+
+  private def view_context
     backtrace{ |obj| obj.is_a? ActionView::Base } || backtrace{ |obj| obj.respond_to? :view_context }.view_context
   end
 
   def view
-    @_view_context ||= _view_context
+    @view_context ||= view_context
   end
 
-
-  def === object
-    self == object || __getobj__ == object
-  end
 end

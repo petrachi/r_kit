@@ -5,17 +5,22 @@ class RKit::Decoration
   # and if not, we do not require the "view_context" (well, we could not, I think)
   # (the only case is if the user define a block elswhere than in the view or in the controller, and use it)
   # (but this case will fail today as well, I think)
-  dependency :backtrace
+  # -> pb w/ backtrace in console (Screencast.limit(5).decorate.map{|x|x} -> infinite loop)
+  dependency :backtrace,
+    :dsl,
+    :utility
 
 
   load_path __FILE__,
-    'base.rb',
-    'class.rb'
+    'base',
+    'base/collection',
+    'base/object',
+    'class',
+    'dsl',
+    'enumerable_extend'
 
-  load_path __FILE__,
-    'action_view_base_extend.rb',
-    'active_record_extend.rb'
+  load_path __FILE__, 'action_view_base_extend', if: :implicit_decoration
 
 
-  config :auto_decoration, true
+  config :implicit_decoration, true
 end

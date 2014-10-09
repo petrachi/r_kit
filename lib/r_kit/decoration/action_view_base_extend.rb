@@ -1,20 +1,21 @@
 module RKit::Decoration::ActionViewBaseExtend
 
   def assign new_assigns
-    _decorate_assigns new_assigns if RKit::Decoration.config.auto_decoration
+    decorate_assigns new_assigns
 
     super
   end
 
 
-  def _decorate_assigns assigns
+  protected def decorate_assigns assigns
     assigns.dup.each do |key, value|
-      assigns[key] = _decorate value
+      assigns[key] = decorate value
     end
   end
 
-  def _decorate assign
+  protected def decorate assign
     if assign.respond_to? :decorate
+      p "go in decorate"
       assign.decorate view_context: self
     else
       assign
