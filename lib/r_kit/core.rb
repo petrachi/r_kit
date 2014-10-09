@@ -23,7 +23,7 @@ class RKit::Core
 
     def with_sprockets file
       @_engine.sprockets = true
-      load_path file, 'sass_extend.rb'
+      load_path file, 'sass_extend'
     end
 
 
@@ -65,8 +65,10 @@ class RKit::Core
   end
 
 
+  # TODO: configurer need some sort of wrapper & things, this needs to be largely improved
   require 'r_kit/core/configurer.rb'
 
+  # TODO: make engine mountable AFTER rails initialization
   require 'r_kit/core/engineer.rb'
 
   require 'r_kit/core/loader.rb'

@@ -19,7 +19,7 @@ class LoadPath
 
   def fullpath
     file.chomp! File.extname(file)
-    File.expand_path(path, file)
+    File.expand_path(path, file) << ".rb"
   end
 
 

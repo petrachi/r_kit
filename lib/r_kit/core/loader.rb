@@ -1,14 +1,14 @@
 class RKit::Core::Loader
   attr_accessor :_base, :load_paths, :dependencies
 
-  @@loaded = []
+  @loaded = []
 
   def self.loaded
-    @@loaded.map{ |name| name.demodulize.underscore }
+    @loaded.map{ |name| name.demodulize.underscore }
   end
 
   def self.loaded? name
-    @@loaded.include? name
+    @loaded.include? name
   end
 
 
@@ -44,7 +44,7 @@ class RKit::Core::Loader
 
 
   def loaded!
-    @@loaded << _base.name
+    __class__.instance_variable_get("@loaded") << _base.name
   end
 
 
