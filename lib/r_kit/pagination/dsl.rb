@@ -1,4 +1,4 @@
-module RKit::Pagination::ActiveRecordExtend
+module RKit::Pagination::Dsl
   act_as_a_dsl
 
   name :pagination_dsl

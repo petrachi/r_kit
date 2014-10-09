@@ -8,7 +8,7 @@ class RKit::Pagination::Base::Page
   end
 
 
-  extend RKit::Decoration::ActiveRecordExtend
+  RKit::Decoration::Dsl.domain self
   acts_as_decorables do
 
     # TODO: we tried to cancel the underscored alias of __getobj__

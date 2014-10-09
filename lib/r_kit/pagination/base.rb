@@ -8,8 +8,8 @@ class RKit::Pagination::Base < CollectionDelegator
 
     super collection
 
-    @page = options.fetch :page, 1
-    @per_page = options.fetch :per_page, RKit::Pagination.config.per_page[collection.klass]
+    @page = options[:page] || 1
+    @per_page = options[:per_page] || RKit::Pagination.config.per_page[collection.klass]
   end
 
   tap_attr_accessor :page
@@ -60,7 +60,7 @@ class RKit::Pagination::Base < CollectionDelegator
 
 
 
-  extend RKit::Decoration::ActiveRecordExtend
+  RKit::Decoration::Dsl.domain self
   acts_as_decorables do
 
     include Enumerable

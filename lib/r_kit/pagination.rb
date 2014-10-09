@@ -7,10 +7,10 @@ class RKit::Pagination
 
 
   load_path __FILE__,
-    'base.rb',
-    'base/page.rb'
+    'base',
+    'base/page',
+    'dsl'
 
-  load_path __FILE__, 'active_record_extend.rb'
 
   # TODO: add a "wrap" option to the config method, that will be used like this
   # config :per_page, 16, wrap: ->(value){ Hash.new(value) }
