@@ -1,5 +1,4 @@
-class RKit::ActiveRecordUtility::Base::Pool < RKit::ActiveRecordUtility::Base
-
+class RKit::ActiveRecordUtility::Pool
   act_as_a_dsl
 
   name :pool_dsl

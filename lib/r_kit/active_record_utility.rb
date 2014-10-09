@@ -4,14 +4,11 @@ class RKit::ActiveRecordUtility
     :utility
 
   load_path __FILE__,
-    'base.rb',
-    'database_schema_error.rb'
-
-  load_path __FILE__, 'active_record_extend.rb'
+    'active_record_extend',
+    'database_schema_error'
 
 
-
-  UTILITIES = Dir[File.join(File.dirname(__FILE__), "active_record_utility/base", "*.rb")].map do |file|
+  UTILITIES = Dir[File.join(File.dirname(__FILE__), "active_record_utility/utilities", "*.rb")].map do |file|
     File.basename file, ".rb"
   end
 
@@ -21,6 +18,6 @@ class RKit::ActiveRecordUtility
 
 
     alias_config utility, :all
-    load_path __FILE__, "base/#{ utility }.rb", if: utility
+    load_path __FILE__, "utilities/#{ utility }", if: utility
   end
 end

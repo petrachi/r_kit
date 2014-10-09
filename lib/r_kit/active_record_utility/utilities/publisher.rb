@@ -1,5 +1,4 @@
-class RKit::ActiveRecordUtility::Base::Publisher < RKit::ActiveRecordUtility::Base
-
+class RKit::ActiveRecordUtility::Publisher
   act_as_a_dsl
 
   name :publisher_dsl

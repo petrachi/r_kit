@@ -1,4 +1,12 @@
-class RKit::ActiveRecordUtility::Base::Series < RKit::ActiveRecordUtility::Base
+class RKit::ActiveRecordUtility::Series
+
+  # TODO: series must change to smthing bigger (maybe a service for itself)
+  # I want the "serie" to have its own DB-Table
+  # with tag, title, brief & custom-paginable
+  # (the custom paginable, could use only the pagination decorator, or a new dsl that inherit from paginable)
+  # and I want to be able to display the series's title+brief if needed
+  # (for example, when the scope "first_of_series" is called)
+  # TODO: maybe rename to "thread" ?
 
   act_as_a_dsl
 
@@ -51,14 +59,15 @@ class RKit::ActiveRecordUtility::Base::Series < RKit::ActiveRecordUtility::Base
 
     # TODO: scope pour l'ordre dans une serie (pour le decorator pagination_tag)
 
-    @@_active_record_utilities_series = {}
+    # @@_active_record_utilities_series = {}
   end
 
 
   methods :instance do
     def series
-      @@_active_record_utilities_series[read_attribute(:series)] ||= series_struct if read_attribute(:series)
-      # TODO: if series cg-hanges, or new element added, series must be re-calculated
+      series_struct if read_attribute(:series)
+      # @@_active_record_utilities_series[read_attribute(:series)] ||= series_struct if read_attribute(:series)
+      # TODO: if series changes, or new element added, series must be re-calculated
       # maybe pre-calc this in after save
     end
 
@@ -94,8 +103,8 @@ class RKit::ActiveRecordUtility::Base::Series < RKit::ActiveRecordUtility::Base
       view.link_to series.name, series_url, class: :btn
     end
 
-    if decorated_klass.columns_hash["title"]
-      # I don't get this "showcase thing", we can delete that and just look into the view for the params
+    if decorated_class.columns_hash["title"]
+      # TODO: I don't get this "showcase thing", we can delete that and just look into the view for the params
       # Or in the collection, to see if the scope is applied (second solution is better)
       def series_title
         "#{ __getobj__.title } <small><i class='no-warp'>(vol #{ position_in_series })</i></small>".html_safe

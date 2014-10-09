@@ -1,5 +1,4 @@
-class RKit::ActiveRecordUtility::Base::Tag
-
+class RKit::ActiveRecordUtility::Tag
   act_as_a_dsl
 
   name :tag_dsl
