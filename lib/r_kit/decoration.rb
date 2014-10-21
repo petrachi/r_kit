@@ -23,4 +23,15 @@ class RKit::Decoration
 
 
   config :implicit_decoration, true
+
+  # TODO: in decorator or in all(utility then), add a "conditionnal" keyword for ruby
+  # that you declare either by "conditionnal do; def m; end; end"
+  # or "conditionnal :m"
+  # and this, will check a proc used passed as a param, or a symbol (and check for nil)
+  # and basically, change the bahovior of the defnied method to use "then"
+  # -> ex: conditionnal :serie_page, on: :serie
+  # -> def serie_page; "prev >"; end
+  # -> modified will be: alias :olsdef, :serie_page; def serie_page(*args, &block); serie.then{ old_def(*args, &block) }; end
+  # --
+  # can use the not done yet 'ovverride' method
 end

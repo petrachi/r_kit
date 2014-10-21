@@ -11,12 +11,12 @@ class RKit::Grid
     'binding'
 
   load_path __FILE__, 'enumerable_extend', if: :enumerable_extend
-  load_path __FILE__, 'kernel_extend', if: :kernel_extend
+  load_path __FILE__, 'main_extend', if: :main_extend
 
 
   config :extends, true
   alias_config :enumerable_extend, :extends
-  alias_config :kernel_extend, :extends
+  alias_config :main_extend, :extends
 
 
   config :base_width, [0.75, ['rem']]
