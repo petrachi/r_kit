@@ -95,12 +95,14 @@ class RKit::ActiveRecordUtility::Series
       # ps: i'm not happy with this current decorate
     end
 
-    def series_url
-      view.url_for [__class__, series: series.name]
-    end
+    depend on: :series do
+      def series_url
+        view.url_for [__class__, series: series.name]
+      end
 
-    def link_to_series
-      view.link_to series.name, series_url, class: :btn
+      def link_to_series
+        view.link_to series.name, series_url, class: :btn
+      end
     end
 
     if decorated_class.columns_hash["title"]
@@ -123,40 +125,44 @@ class RKit::ActiveRecordUtility::Series
           super()
         end
       end
+
     end
 
-    # TODO: put default locales keys ("vol" is hard coded here) in cluster
-    # same for the 'title' methods before
-    # TODO: the "disabled" link for self doesn't work yet
-    # in fact, the collection does not use the "self" object, so the singleton_class is lost
-    def pagination_tag
-      disable_pagination_link self
-      series.collection.decorate.map(&:pagination_link_to).reduce(:safe_concat)
-    end
-
-    def pagination_link_to
-      view.link_to "vol #{ position_in_series }", self, class: :btn
-    end
-
-    def disabled_pagination_link_to
-      view.content_tag :span, "vol #{ position_in_series }", class: :'btn-disabled'
-    end
-
-    def disable_pagination_link seriable_instance
-      class << seriable_instance
-        alias :pagination_link_to :disabled_pagination_link_to
+    depend on: :series do
+      
+      # TODO: put default locales keys ("vol" is hard coded here) in cluster
+      # same for the 'title' methods before
+      # TODO: the "disabled" link for self doesn't work yet
+      # in fact, the collection does not use the "self" object, so the singleton_class is lost
+      def pagination_tag
+        disable_pagination_link self
+        series.collection.decorate.map(&:pagination_link_to).reduce(:safe_concat)
       end
-    end
+
+      def pagination_link_to
+        view.link_to "vol #{ position_in_series }", self, class: :btn
+      end
+
+      def disabled_pagination_link_to
+        view.content_tag :span, "vol #{ position_in_series }", class: :'btn-disabled'
+      end
+
+      def disable_pagination_link seriable_instance
+        class << seriable_instance
+          alias :pagination_link_to :disabled_pagination_link_to
+        end
+      end
 
 
-    # TODO: put default locales keys (:previous, :next) in cluster
-    def navigation_tag
-      view.content_tag :p do
-        safe_buffer = ActiveSupport::SafeBuffer.new
-        safe_buffer += view.link_to view.t(:previous), following, class: :btn if following
-        safe_buffer += " "
-        safe_buffer += view.link_to view.t(:next), followed, class: :btn if followed
-        safe_buffer
+      # TODO: put default locales keys (:previous, :next) in cluster
+      def navigation_tag
+        view.content_tag :p do
+          safe_buffer = ActiveSupport::SafeBuffer.new
+          safe_buffer += view.link_to view.t(:previous), following, class: :btn if following
+          safe_buffer += " "
+          safe_buffer += view.link_to view.t(:next), followed, class: :btn if followed
+          safe_buffer
+        end
       end
     end
   end
