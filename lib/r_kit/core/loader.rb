@@ -44,7 +44,7 @@ class RKit::Core::Loader
 
 
   def loaded!
-    __class__.instance_variable_get("@loaded") << _base.name
+    self.class.instance_variable_get("@loaded") << _base.name
   end
 
 
