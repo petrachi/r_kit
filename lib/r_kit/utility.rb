@@ -1,4 +1,7 @@
 class RKit::Utility
+
+  dependency :override
+
   # TODO: this 'dir' line could be a utility extend
   UTILITIES = Dir[File.join(File.dirname(__FILE__), "utility", "*.rb")].map do |file|
     File.basename file, "_extend.rb"

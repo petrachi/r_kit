@@ -9,8 +9,8 @@ class Module
 
 
 
-  alias :basic_attr_reader :attr_reader
-  def attr_reader *names, default: nil
+  #alias :basic_attr_reader :attr_reader
+  override_method :attr_reader do |*names, default: nil|
     if default
       names.each do |name|
         define_method name do
@@ -19,7 +19,8 @@ class Module
         end
       end
     else
-      basic_attr_reader *names
+      #basic_attr_reader *names
+      super *names
     end
   end
 
@@ -47,13 +48,14 @@ class Module
   end
 
 
-  alias :basic_const_get :const_get
-  def const_get name, *args, default: nil
+  #alias :basic_const_get :const_get
+  override_method :const_get do |name, *args, default: nil|
     if default && !const_defined?(name)
       name.safe_constantize ||
         const_set(name, default)
     else
-      basic_const_get name, *args
+      #basic_const_get name, *args
+      super name, *args
     end
   end
 
