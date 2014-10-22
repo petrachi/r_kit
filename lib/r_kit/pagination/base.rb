@@ -69,23 +69,24 @@ class RKit::Pagination::Base < CollectionDelegator
       limited_collection.decorate.each &block
     end
 
-
-    def pagination_tag
-      view.content_tag :nav, class: :pagination do
-        [previous_page_tag, pages_tag, next_page_tag].reduce(:safe_concat)
+    depend on: :pages do
+      def pagination_tag
+        view.content_tag :nav, class: :pagination do
+          [previous_page_tag, pages_tag, next_page_tag].reduce(:safe_concat)
+        end
       end
-    end
 
-    def previous_page_tag
-      previous_page.decorate.page_tag "<"
-    end
+      def previous_page_tag
+        previous_page.decorate.page_tag "<"
+      end
 
-    def pages_tag
-      pages.map(&:decorate).map(&:page_tag).reduce(:safe_concat)
-    end
+      def pages_tag
+        pages.map(&:decorate).map(&:page_tag).reduce(:safe_concat)
+      end
 
-    def next_page_tag
-      next_page.decorate.page_tag ">"
+      def next_page_tag
+        next_page.decorate.page_tag ">"
+      end
     end
   end
 
