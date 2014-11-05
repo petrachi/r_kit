@@ -8,7 +8,7 @@ class Class
 
     (self.methods - methods).each do |method_name|
       override_singleton_method method_name do |*args, &block|
-        if send(on).present? # TODO: use kernel 'conditionnal statement', wich will include procs
+        if send(on).present? # TODO: use kernel 'then', wich use 'conditionnal statement', wich will include procs
           super *args, &block
         else
           nil

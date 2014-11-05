@@ -20,6 +20,8 @@ module Kernel
     end
   end
 
+  # TODO: check for ".present?/.presence" when 'send(method_name)', in case of non nil but empty
+  # TODO: also, allow to send objects in 'if/unless', and only send if symbol, or exec if proc
   def conditionnal_statement **options
     options.slice(:if, :unless).reduce(true) do |continue, (statement, method_name)|
       continue && send(method_name).tap do |closure|
