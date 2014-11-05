@@ -12,6 +12,10 @@ class RKit::Dsl::Base
       end
     end
 
+    protected def thrust_dsl_callback!
+      @domain.class_eval &readonly.methods[:before]
+    end
+
     protected def thrust_dsl_interface!
       name = @name
 
@@ -53,7 +57,7 @@ class RKit::Dsl::Base
 
           instance_eval &send(name).methods[:class]
           class_eval &send(name).methods[:instance]
-          if respond_to?(:acts_as_decorables?) && acts_as_decorables?
+          if respond_to?(:acts_as_decorables?)
             decorator_class.class_eval &send(name).methods[:decorator]
           end
 

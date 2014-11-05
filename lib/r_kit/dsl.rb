@@ -67,6 +67,13 @@ class RKit::Dsl
   # then -> def self.clas_method, -> def instance_method
   # then, in host class -> act_as_x -> define "@X", X_delegator(self), delegate *X.methods, to: @X
 
+
+  # TODO: waiting for decoration
+  # there is a "decorator" methods you can define. but the object must already be decorable.
+  # I want to eager load this behavior
+  # if the object is not decorable, save the decorator methods somewhere
+  # then, when the object becomes decorables, add these methods to the decorator!
+
   # load_path __FILE__, 'test'
 
 end

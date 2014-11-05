@@ -40,10 +40,18 @@ class RKit::Dsl::Base
       shadow_self.instance_variable_set "@domain", domain
 
       thrust_dsl!
+      thrust_dsl_callback! if @methods[:before]
       thrust_dsl_interface!
       thrust_dsl_options!
       thrust_dsl_extend!
     end
+  end
+
+
+  def before &block
+    methods :before, &block
+
+    thrust_dsl_callback!
   end
 
 
