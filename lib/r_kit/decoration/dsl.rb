@@ -5,6 +5,11 @@ class RKit::Decoration::Dsl
   method :acts_as_decorables
   domain ActiveRecord::Base
 
+  before do
+    def self.decorator_class() @decorator_class ||= Module.new end
+    def decorated?() false end
+  end
+
 
   params ->(from = nil, &block){}
 
@@ -12,6 +17,7 @@ class RKit::Decoration::Dsl
 
     @decorator_class = RKit::Decoration::Class.new self,
       from: decoration_dsl.params.from,
+      sleeping: decorator_class,
       &decoration_dsl.params.block
 
     def decorator_class
@@ -42,8 +48,11 @@ class RKit::Decoration::Dsl
 
   methods :instance do
 
+    delegate :decorator_class, to: :__class__
+
+
     def decorate **options
-      __class__.decorator_class.new self, **options
+      decorator_class.new self, **options
     end
 
     def decorated?() false end

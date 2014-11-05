@@ -1,6 +1,8 @@
 class RKit::Decoration::Collection < CollectionDelegator
   include RKit::Decoration::Base
 
+  singleton_attr_reader :decorated_class
+
 
   attr_accessor :safe_mode
 

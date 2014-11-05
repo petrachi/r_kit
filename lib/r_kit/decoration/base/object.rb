@@ -3,6 +3,12 @@ class RKit::Decoration::Object < SimpleDelegator
 
 
   singleton_attr_reader :decorated_class
+
+
+
+  # TODO: we might want to delete the 'after_initialize' thing, as it is useless
+  # and not a good answer to the problem we tried to solve with this
+  # wich is, recursive decoration
   singleton_attr_reader :after_initialize_procs, default: proc{ [] }
 
   def self.after_initialize &block

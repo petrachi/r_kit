@@ -24,14 +24,10 @@ class RKit::Decoration
 
   config :implicit_decoration, true
 
-  # TODO: in decorator or in all(utility then), add a "conditionnal" keyword for ruby
-  # that you declare either by "conditionnal do; def m; end; end"
-  # or "conditionnal :m"
-  # and this, will check a proc used passed as a param, or a symbol (and check for nil)
-  # and basically, change the bahovior of the defnied method to use "then"
-  # -> ex: conditionnal :serie_page, on: :serie
-  # -> def serie_page; "prev >"; end
-  # -> modified will be: alias :olsdef, :serie_page; def serie_page(*args, &block); serie.then{ old_def(*args, &block) }; end
-  # --
-  # can use the not done yet 'ovverride' method
+  # TODO: read a todo in 'dsl' called 'waiting for decoration'
+
+  # TODO: decoration needs to be recursive
+  # I think this can be done by overrding the method missing method from simple delegator
+  # a little like what we've done for the 'each' method in collection delegator
+
 end

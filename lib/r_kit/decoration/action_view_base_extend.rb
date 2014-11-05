@@ -9,13 +9,14 @@ module RKit::Decoration::ActionViewBaseExtend
 
   protected def decorate_assigns assigns
     assigns.dup.each do |key, value|
+      binding.pry if value.is_a?(Screencast)
+
       assigns[key] = decorate value
     end
   end
 
   protected def decorate assign
     if assign.respond_to? :decorate
-      p "go in decorate"
       assign.decorate view_context: self
     else
       assign
