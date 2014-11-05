@@ -13,13 +13,16 @@ class RKit::Pagination::Base::Page
 
     # TODO: we tried to cancel the underscored alias of __getobj__
     # cause the class name is also an attr_name
+    # -> Page underscored will become 'page', wich is an attribute,
+    # -> so here, we don't want 'page' to refer to the whole object
     # but this doesn't work, cause when you use a block, the decorator class creation will be processed after
     # so, in decoration, we might whant to alias only if method not already defined
-    def page
+    def page # this doesn't work, it has no effect
       __getobj__.page
     end
 
 
+    # TODO: this doesn not need to be an 'after_initialize', it could just override the default initializer
     after_initialize do
       if __getobj__.page == base.page
         alias :page_tag :disabled_link_to_page

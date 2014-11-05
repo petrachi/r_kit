@@ -9,7 +9,8 @@ class RKit::Pagination
   load_path __FILE__,
     'base',
     'base/page',
-    'dsl'
+    'dsl',
+    'enumerable_extend'
 
 
   # TODO: add a "wrap" option to the config method, that will be used like this

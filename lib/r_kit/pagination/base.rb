@@ -12,6 +12,9 @@ class RKit::Pagination::Base < CollectionDelegator
     @per_page = options[:per_page] || RKit::Pagination.config.per_page[collection.klass]
   end
 
+  def paginated?() true end
+
+
   tap_attr_accessor :page
   tap_attr_accessor :per_page
 
@@ -63,11 +66,13 @@ class RKit::Pagination::Base < CollectionDelegator
   RKit::Decoration::Dsl.domain self
   acts_as_decorables do
 
-    include Enumerable
+    # TODO: I must repeat the 'paginated?' method, because this decorator will be an collection one
+    # and it includes ennumarabme
+    # include Enumerable
+    # wich has the 'paginated?' method defined
+    # In the collection delegator, I might want to not override previously defined methods (like this one)
+    def paginated?() true end
 
-    def each &block
-      limited_collection.decorate.each &block
-    end
 
     depend on: :pages do
       def pagination_tag

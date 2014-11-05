@@ -11,5 +11,7 @@ module RKit::Pagination::Dsl
       RKit::Pagination::Base.new(all, page: page, per_page: per_page)
     end
 
+    def paginated?() false end
+
   end
 end
