@@ -1,8 +1,6 @@
 class RKit::Decoration::Collection < CollectionDelegator
   include RKit::Decoration::Base
 
-  singleton_attr_reader :decorated_class
-
 
   attr_accessor :safe_mode
 
@@ -10,8 +8,21 @@ class RKit::Decoration::Collection < CollectionDelegator
   def unsafe() tap{ @safe_mode = false } end
 
 
+  def initialize *args
+    safe_mode = self.safe_mode
+
+    super
+
+    class << __getobj__
+      alias :basic_each :each
+      define_method :each, ->(&block) do
+        decorated.each &block
+      end
+    end
+  end
+
   def each &block
-    collection.each do |object|
+    collection.basic_each do |object|
       if safe_mode && object.dont_respond_to?(:decorate)
         block.call object
       else

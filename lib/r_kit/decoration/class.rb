@@ -16,7 +16,11 @@ class RKit::Decoration::Class
   def decorator
     decorator_from(@from)
       .tap{ |decorator| decorator.instance_variable_set "@decorated_class", @decorated }
-      .tap{ |decorator| decorator.class_eval{ alias :"#{ decorated_class.demodulize.underscore }" :__getobj__ } }
+      .tap{ |decorator|
+        unless decorator.decorated_class.method_defined? :"#{ decorator.decorated_class.demodulize.underscore }"
+          decorator.class_eval{ alias :"#{ decorated_class.demodulize.underscore }" :__getobj__ }
+        end
+      }
       .tap{ |decorator| decorator.send :include, @sleeping }
       .tap{ |decorator| decorator.class_eval &@block }
   end

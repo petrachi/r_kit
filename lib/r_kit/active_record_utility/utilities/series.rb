@@ -32,7 +32,7 @@ class RKit::ActiveRecordUtility::Series
     belongs_to :following, class_name: name
 
     before_validation if: :following_id_changed? do
-      self.title ||= following.title if __class__.column_exists? "title"
+      self.title ||= following.title if __class__.column_exists? "title" # TODO: this not seems to work (on creation?)
       self.series = following.series.name
     end
 
@@ -108,6 +108,9 @@ class RKit::ActiveRecordUtility::Series
     if decorated_class.columns_hash["title"]
       # TODO: I don't get this "showcase thing", we can delete that and just look into the view for the params
       # Or in the collection, to see if the scope is applied (second solution is better)
+      # TODO: to make a decision, we need to know if 'first_of_Series' scope is applied
+      # for that, we need to add behavior to 'scope' (ActiveRecord::Scoping::Named::ClassMethods)
+      # and, on an instance, to keep the 'collection where it come from' intel (?? ennumerable first, etc ??)
       def series_title
         "#{ __getobj__.title } <small><i class='no-warp'>(vol #{ position_in_series })</i></small>".html_safe
       end
@@ -129,7 +132,7 @@ class RKit::ActiveRecordUtility::Series
     end
 
     depend on: :series do
-      
+
       # TODO: put default locales keys ("vol" is hard coded here) in cluster
       # same for the 'title' methods before
       # TODO: the "disabled" link for self doesn't work yet

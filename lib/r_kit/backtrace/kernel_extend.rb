@@ -1,5 +1,7 @@
 module Kernel
-
+  # TODO: this method (and I think the other one two) can lead to infinite loop
+  # when we arrive on top frame without having return, it just goes for ever in the rescue clause
+  # and then, inifite loop if 'nil' does not fill conditions
   def _backtrace_from_ruby_vm &block
     stack_level = 0
     block ||= ->(obj){ obj != self }

@@ -23,6 +23,7 @@ class RKit::Decoration
 
 
   config :implicit_decoration, true
+  config :recursive_decoration, true
 
   # TODO: read a todo in 'dsl' called 'waiting for decoration'
 
