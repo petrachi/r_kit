@@ -27,4 +27,26 @@ class RKit::Pagination
 
 
   # TODO: we need to be hable to paginate any kind of collection
+
+  # TODO: limited_collection, total_pages & pages can change, based on scopes or "page & per_page" config
+  # So we need a "@loaded" instance_variable
+  # that will have the same role as in AR::Relation
+  # -> either, can't scope if loaded
+  # -> either, empty the 3 "based on scope/config" variables
+  # --
+  # or, we don't memoize the 3 problematic vars
+  # wich will be my choice right now
+
+
+  # TODO: the "per_page" will be settable either by an arg in the method,
+  # or by an option, per model, in the dsl (access by Article.all.instance_variable_get "@klass")
+  # or in the "pagination" config
+  # the "current page" will be 1 by default
+
+  # TODO: Raise an error if the collection has a "limit" or an "offset" (before or after pagination initialization)
+  # here is the pagination method scope : Paginator::Collection.new(scoped).limit(per).offset((page-1) * per)
+
+  # TODO: Define an option to use pagination based on instance, in this case, the "per_page" is set to one
+  # and the "pagination_tag" accept a block to display the "page number"
+
 end

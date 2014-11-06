@@ -39,6 +39,8 @@ class RKit::Pagination::Base < CollectionDelegator
       .offset((page-1) * per_page)
   end
 
+  include Enumerable
+
   def each &block
     limited_collection.each &block
   end
@@ -65,15 +67,6 @@ class RKit::Pagination::Base < CollectionDelegator
 
   RKit::Decoration::Dsl.domain self
   acts_as_decorables do
-
-    # TODO: I must repeat the 'paginated?' method, because this decorator will be an collection one
-    # and it includes ennumarabme
-    # include Enumerable
-    # wich has the 'paginated?' method defined
-    # In the collection delegator, I might want to not override previously defined methods (like this one)
-    def paginated?() true end
-
-
     depend on: :pages do
       def pagination_tag
         view.content_tag :nav, class: :pagination do
@@ -95,46 +88,4 @@ class RKit::Pagination::Base < CollectionDelegator
     end
   end
 
-
-
-
-  # TODO: limited_collection, total_pages & pages can change, based on scopes or "page & per_page" config
-  # So we need a "@loaded" instance_variable
-  # that will have the same role as in AR::Relation
-  # -> either, can't scope if loaded
-  # -> either, empty the 3 "based on scope/config" variables
-  # --
-  # or, we don't memoize the 3 problematic vars
-  # wich will be my choice right now
-
-
-
-
-  # I need
-  # collection, records/instances/results/paginated_collection/limited_collection(as we use SQL 'limit')
-  # current page, total nb items, total pages
-
-  # calling could be : Articles.paginate(page: 2, per_page: 15).published
-  # note that published is _after_, but we still want to display 15 records
-  # Alternative call Articles.paginate.page(2).per_page(15)
-  # --
-  # the "per_page" will be settable either by an arg in the method,
-  # or by an option, per model, in the dsl (access by Article.all.instance_variable_get "@klass")
-  # or in the "pagination" config
-  # the "current page" will be 1 by default
-
-  # Raise an error if the collection has a "limit" or an "offset" (before or after pagination initialization)
-  # here is the pagination method scope : Paginator::Collection.new(scoped).limit(per).offset((page-1) * per)
-
-
-  # We also need a method "pagination_tag", in the view
-  # maybe use a decorator to do so.
-
-  # Define an option to use pagination based on instance, in this case, the "per_page" is set to one
-  # and the "pagination_tag" accept a block to display the "page number"
-
-
-  # Idea, the "current_page" info (to disable the current page link) could be an instance of a class (pagination::Page)
-  # so in that class, (or in her decorator), we could define the "link_to_page" method
-  # (and the "disabled_link_to", wich we will alias on self)
 end
