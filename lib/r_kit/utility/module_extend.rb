@@ -27,10 +27,11 @@ class Module
   # or like ".name" to read
   # TODO: to be used in 'pagination', these need an "after" callback (to set @limited_collection to nil)
   # TODO: and to be used in 'grid (base.rb, binding_accessor)', these need an "to" delegation object
-  def tap_attr_accessor *names
+  def tap_attr_accessor *names, typecast: nil
     names.each do |name|
-      define_method name, ->(value = nil) do
-        if value
+      define_method name, ->(value = Nothing) do
+        if value.thing?
+          value = value.send typecast if typecast
           instance_variable_set "@#{ name }", value
           self
         else

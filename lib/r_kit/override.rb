@@ -28,10 +28,4 @@ class RKit::Override
   # There is 'override_method', 'override_singleton_method', which delegates to: UnboundMethod.override (instance_meth) & Method.override (class meth)
 
 
-  # TODO: use that in a lot of 'utility' override, search for 'alias'
-
-  # TODO: create a dsl around that, to do some classic override.
-  # First one will be 'depend_on :x', wich exec the method only if send(:x) is not nil, else, will return nil
-  # --> will be used in series (and maybe pagination?)
-
 end
