@@ -46,12 +46,6 @@ class RKit::Dsl
   # -> to do that, either, interchage all the methods (painfull)
   # -> or, try to replace the const_name when 'act_as_dsl' is used (pb when re-opening the class ?)
 
-  # TODO: rkit: on dsl, I lac of a callback when dsl is put in another class
-  # (like a 'def self.decorated(decorator)' for example).
-  # I know I can put the code in 'class methods',
-  # but I may also want a specific callback from the calling class ?
-  # (maybe smthng like "before_acts_as_X + after_act_as_X") ("self.yanked" "self.X-ed")
-
   # TODO: make smthing to define methods on the "domain" level
   # for example, in the series dsl, I could define a method "per_page" in all the domain, that would return '[]'
   # and when dsl is added, that would return an array with all the series
@@ -67,12 +61,6 @@ class RKit::Dsl
   # then -> def self.clas_method, -> def instance_method
   # then, in host class -> act_as_x -> define "@X", X_delegator(self), delegate *X.methods, to: @X
 
-
-  # TODO: waiting for decoration
-  # there is a "decorator" methods you can define. but the object must already be decorable.
-  # I want to eager load this behavior
-  # if the object is not decorable, save the decorator methods somewhere
-  # then, when the object becomes decorables, add these methods to the decorator!
 
   # load_path __FILE__, 'test'
 

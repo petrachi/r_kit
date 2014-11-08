@@ -15,8 +15,7 @@ class RKit::Pagination::Base < CollectionDelegator
   def paginated?() true end
 
 
-  tap_attr_accessor :page
-  tap_attr_accessor :per_page
+  tap_attr_accessor :page, :per_page, typecast: :to_i
 
   def total_pages
     (collection.count / per_page.to_f).ceil

@@ -52,7 +52,7 @@ class RKit::Dsl::Base
       @domain.send :define_singleton_method, "try_to_#{ @method }" do |*args, &block|
         send "#{ name }_params=", *args, &block
 
-        if send "can_#{ send(name).method }?"
+        if send("can_#{ send(name).method }?") && !send("#{ send(name).method }?")
           send(name).dsls[name] << self
 
           instance_eval &send(name).methods[:class]
