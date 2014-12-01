@@ -32,7 +32,7 @@ class RKit::ActiveRecordUtility::Series
     belongs_to :following, class_name: name
 
     before_validation if: :following_id_changed? do
-      self.title ||= following.title if __class__.column_exists? "title" # TODO: this not seems to work (on creation?)
+      self.title ||= following.title if __class__.column_exists? "title"
       self.series = following.series.name
     end
 
@@ -51,11 +51,7 @@ class RKit::ActiveRecordUtility::Series
     validates_uniqueness_of :following_id, if: :following
 
     scope :series, ->(series){ series && where(series: series) }
-
-    # TODO: adapter le scope pour intégrer les published (si interfered)
-    # je laisse en commentaire parceque j'aime pas le nom du scope,
-    # et j'ai pas d'idée là maintenant (à part 'pilotes', ou 'firsts')
-    # scope :firsts_of_series, ->{ where(following_id: nil) }
+    scope :firsts_of_series, ->{ where(following_id: nil) }
 
     # TODO: scope pour l'ordre dans une serie (pour le decorator pagination_tag)
 
@@ -105,30 +101,40 @@ class RKit::ActiveRecordUtility::Series
       end
     end
 
+
     if decorated_class.columns_hash["title"]
-      # TODO: I don't get this "showcase thing", we can delete that and just look into the view for the params
-      # Or in the collection, to see if the scope is applied (second solution is better)
-      # TODO: to make a decision, we need to know if 'first_of_Series' scope is applied
-      # for that, we need to add behavior to 'scope' (ActiveRecord::Scoping::Named::ClassMethods)
-      # and, on an instance, to keep the 'collection where it come from' intel (?? ennumerable first, etc ??)
-      def series_title
-        "#{ __getobj__.title } <small><i class='no-warp'>(vol #{ position_in_series })</i></small>".html_safe
-      end
+      depend on: :series, strict: false do
 
-      def showcase_title
-        "#{ __getobj__.title } <small><i class='no-warp'>(#{ series.size } vols)</i></small>".html_safe
-      end
-
-      def title options = {}
-        if series and false # and showcase
-          showcase_title
-        elsif series
-          series_title
-        else
-          super()
+        # TODO: I don't get this "showcase thing", we can delete that and just look into the view for the params
+        # Or in the collection, to see if the scope is applied (second solution is better)
+        # TODO: to make a decision, we need to know if 'first_of_Series' scope is applied
+        # for that, we need to add behavior to 'scope' (ActiveRecord::Scoping::Named::ClassMethods)
+        # and, on an instance, to keep the 'collection where it come from' intel (?? ennumerable first, etc ??)
+        def series_title
+          "#{ __getobj__.title } <small><i class='no-warp'>(vol #{ position_in_series })</i></small>".html_safe
         end
-      end
 
+        def showcase_title
+          "#{ __getobj__.title } <small><i class='no-warp'>(#{ series.size } vols)</i></small>".html_safe
+        end
+
+        # TODO: title don't work if there is no series
+        # cause 'depend' stille define the method, but will return nil
+        def title options = {}
+          if showcase
+            showcase_title
+          else
+            series_title
+          end
+        end
+
+        # TODO: don't ssems to work in decorated obj
+        def showcase
+          scoped? :firsts_of_series
+          # collection_context.then{ |collection| collection.scoped? :firsts_of_series }
+        end
+
+      end
     end
 
     depend on: :series do
@@ -138,8 +144,9 @@ class RKit::ActiveRecordUtility::Series
       # TODO: the "disabled" link for self doesn't work yet
       # in fact, the collection does not use the "self" object, so the singleton_class is lost
       def pagination_tag
-        disable_pagination_link self
-        series.collection.decorate.map(&:pagination_link_to).reduce(:safe_concat)
+        "serie pagination tag not working"
+        # disable_pagination_link self
+        # series.collection.decorate.map(&:pagination_link_to).reduce(:safe_concat)
       end
 
       def pagination_link_to

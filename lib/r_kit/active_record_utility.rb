@@ -1,6 +1,8 @@
 class RKit::ActiveRecordUtility
 
   dependency :dsl,
+    :frame,
+    :override,
     :utility
 
   load_path __FILE__,

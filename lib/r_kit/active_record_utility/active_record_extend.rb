@@ -1,20 +1,36 @@
-module RKit::ActiveRecordUtility::ActiveRecordExtend
+class ActiveRecord::Base
 
-  def collection_finder **options
-    all
-      .then(if: :acts_as_poolables?){ |collection| collection.pool options[:pool] }
-      .then(if: :acts_as_publishables?){ |collection| collection.published.publication_desc }
-      .then(if: :acts_as_seriables?){ |collection| collection.series options[:series] }
-  end
+  override_singleton_method :scope do |name, body, &block|
+    __olddef__(name, body, &block).tap do |scope_name|
 
-  def instance_finder **options
-    if acts_as_taggables?
-      tagged options[:tag]
-    else
-      find_by id: options[:id]
+      override_singleton_method scope_name do |*args, &block|
+        __olddef__(*args, &block).tap do |collection|
+          collection.scopes << scope_name
+        end
+      end
+
     end
   end
 
 
-  ActiveRecord::Base.extend self
+  depend on: :frame do
+    def scoped? *args
+      frame.scoped? *args
+    end
+  end
+
+end
+
+
+class ActiveRecord::Relation
+
+  attr_reader :scopes, default: proc{ [] }
+
+  def scoped? name
+    scopes.include? name
+  end
+
+  RKit::Frame::CollectionDsl.domain self
+  acts_as_frameable_collection
+
 end
