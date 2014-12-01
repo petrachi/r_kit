@@ -36,9 +36,7 @@ class RKit::Dsl::Base
 
     @domain ||= domain
 
-    shadow :domain do |shadow_self|
-      shadow_self.instance_variable_set "@domain", domain
-
+    shadow domain: domain do |shadow_self|
       thrust_dsl!
       thrust_dsl_callback! if @methods[:before]
       thrust_dsl_interface!
