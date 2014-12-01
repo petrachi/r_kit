@@ -9,8 +9,6 @@ module RKit::Decoration::ActionViewBaseExtend
 
   protected def decorate_assigns assigns
     assigns.dup.each do |key, value|
-      binding.pry if value.is_a?(Screencast)
-
       assigns[key] = decorate value
     end
   end
