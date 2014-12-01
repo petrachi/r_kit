@@ -10,7 +10,7 @@ class RKit::Pagination::Base::Page
 
   RKit::Decoration::Dsl.domain self
   acts_as_decorables do
-    
+
     after_initialize do
       if page == base.page
         alias :page_tag :disabled_link_to_page

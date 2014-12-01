@@ -2,6 +2,7 @@ class RKit::Pagination
 
   dependency :decoration,
     :dsl,
+    :override,
     :struct,
     :utility
 
