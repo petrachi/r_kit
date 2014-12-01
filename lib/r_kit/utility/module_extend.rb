@@ -18,7 +18,16 @@ class Module
         end
       end
     else
-      super *names
+      __olddef__ *names
+    end
+  end
+
+  override_method :attr_accessor do |*names, default: nil|
+    if default
+      attr_writer *names
+      attr_reader *names, default: default
+    else
+      __olddef__ *names
     end
   end
 
@@ -46,13 +55,12 @@ class Module
     singleton_class.send :attr_reader, *args, **options
   end
 
-
   override_method :const_get do |name, *args, default: nil|
     if default && !const_defined?(name)
       name.safe_constantize ||
         const_set(name, default)
     else
-      super name, *args
+      __olddef__ name, *args
     end
   end
 

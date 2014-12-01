@@ -19,6 +19,7 @@ class RKit::Utility
   # TODO: module_extend: to_class
   # TODO: enumerable_extend/or-array_extend: with_indifferent_access
   # TODO: get back some code from hash_extend && array_extend gems
+  # TODO: 'ancestor=' actually need to be an override of module#include, wich will allow to include class
 
 
   # TODO: Today, the files are structured by class they extend, not by feature
@@ -27,6 +28,4 @@ class RKit::Utility
   # TODO, maybe, we should create a module/feature, then include the modules into corresponding classes
   # TODO: and, this has the advantage to be more readable on a RKit::CONFIG point of view (POV)
 
-  # TODO: in Module: method "override", qui alias l'ancienne méthode, et redéfinit la nouvelle
-  # TODO: ou, qui crée un module, et le prepend, pour utiliser "super"
 end

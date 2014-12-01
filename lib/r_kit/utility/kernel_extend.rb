@@ -37,15 +37,19 @@ module Kernel
 
 
 
-  def shadow *names, &block
-    saved_state = names.reduce({}) do |saved_state, name|
+  def shadow **shadows, &block
+    saved_state = shadows.keys.reduce({}) do |saved_state, name|
       saved_state[name] = instance_variable_get name.ivar
       saved_state
     end
 
+    shadows.each do |name, value|
+      instance_variable_set name.ivar, value
+    end
+
     closure = block.call(self)
 
-    names.each do |name|
+    shadows.keys.each do |name|
       instance_variable_set name.ivar, saved_state[name]
     end
 
