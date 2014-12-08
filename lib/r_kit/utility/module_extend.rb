@@ -1,6 +1,6 @@
 class Module
 
-  delegate :deconstantize, :demodulize, :underscore,
+  delegate :deconstantize, :demodulize, :tableize, :underscore,
     to: :name
 
   def namespace
