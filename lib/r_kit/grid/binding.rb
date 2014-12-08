@@ -56,7 +56,7 @@ class RKit::Grid::Binding
     # TODO: Tha last one can be replaced (or duplicated) by a "respond_to?" automatically triggered from here
     def attributes= attributes
       @attributes.merge!(attributes) do |key, old_value, new_value|
-        Array.wrap(old_value) + Array.wrap(new_value)
+        Array.wrap(old_value) | Array.wrap(new_value)
       end
     end
 
@@ -72,11 +72,7 @@ class RKit::Grid::Binding
     def process value, object = nil
       case value
       when Proc
-        proc_value = case value.arity
-        when 1 then value.call(object)
-        else value.call
-        end
-        process(proc_value, object)
+        process(value.call(object), object)
       when Array
         value.map{ |unique_value| process(unique_value, object) }.join(' ')
       when String, Symbol

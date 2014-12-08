@@ -10,7 +10,7 @@ class RKit::Grid::Base
     def required_bindings
       {
         col_attributes: {
-          class: ->{ :"grid-col-#{ _binding.col_size }" }
+          class: proc{ :"grid-col-#{ _binding.col_size }" }.call
         }
       }
     end
