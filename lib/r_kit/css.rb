@@ -8,9 +8,11 @@ class RKit::Css
   config :colors, :grey, '#888'
   config :colors, :light_black, '#181818'
   config :colors, :red, '#b62b2b'
+  config :colors, :goldenrod, '#daa520'
   config :colors, :white, '#fbfbfb'
 
   alias_config :colors, :primary_color, :red
+  alias_config :colors, :link_color, :goldenrod
   alias_config :colors, :text_color, :grey
   alias_config :colors, :text_alt_color, :dark_black
   alias_config :colors, :background_color, :black
