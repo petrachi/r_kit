@@ -15,7 +15,7 @@ class SimpleDelegator
 
 
   def === object
-    self == object || __getobj__ == object
+    self == object || __getobj__ == object || __getobj__ == object.try(:__getobj__)
   end
 
 end

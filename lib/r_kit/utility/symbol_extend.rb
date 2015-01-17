@@ -1,3 +1,3 @@
 class Symbol
-  delegate :classify, :constantize, :safe_constantize, :ivar, :lvar, to: :to_s
+  delegate :classify, :constantize, :dasherize, :safe_constantize, :ivar, :lvar, to: :to_s
 end
