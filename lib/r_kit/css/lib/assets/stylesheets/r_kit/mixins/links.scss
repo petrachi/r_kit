@@ -3,3 +3,15 @@
   text-decoration: inherit;
   cursor: inherit;
 }
+
+@mixin highlighted-link() {
+
+  @include highlighted-block;
+
+  &:hover{
+    color: rgba(white-color(), .85);
+    background-color: rgba(black-color(), .80);
+
+    text-decoration: inherit;
+  }
+}

@@ -1,0 +1,4 @@
+@mixin highlighted-block() {
+  color: rgba(white-color(), .65);
+  background-color: rgba(black-color(), .85);
+}
