@@ -24,7 +24,7 @@ class RKit::Pagination
   # To do this, I think that we will need a serious rework of the "configurer" core class
   # and consider each config value to be an instance of a "config_value" class (under the configurer namespace)
   # (we did it once for "loader", we can do it again!)
-  config :per_page, Hash.new(16)
+  config :per_page, Hash.new(4)
 
 
   # TODO: we need to be hable to paginate any kind of collection

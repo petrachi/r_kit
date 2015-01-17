@@ -14,5 +14,5 @@ class CollectionDelegator < SimpleDelegator
       closure
     end
   end
-  
+
 end

@@ -33,7 +33,7 @@ class RKit::Pagination::Base < CollectionDelegator
 
 
   def limited_collection
-    collection
+    @limited_collection ||= collection
       .limit(per_page)
       .offset((page-1) * per_page)
   end
@@ -41,11 +41,17 @@ class RKit::Pagination::Base < CollectionDelegator
   include Enumerable
 
   def each &block
-    limited_collection.each &block
+    limited_collection.each(&block)
   end
 
   delegate :inspect, to: :limited_collection
 
+  def reverse
+    reversed = limited_collection.reverse
+    @limited_collection.clear.concat(reversed)
+    
+    self
+  end
 
 
   def pages
@@ -66,6 +72,14 @@ class RKit::Pagination::Base < CollectionDelegator
 
   RKit::Decoration::Dsl.domain self
   acts_as_decorables do
+    after_initialize do
+      # TODO: I need this definition here
+      # Otherwise, the base definition in enumerable_extend is found first
+
+      define_singleton_method :paginated?, ->{ true }
+    end
+
+
     depend on: :pages do
       def pagination_tag
         view.content_tag :nav, class: :pagination do
