@@ -30,6 +30,8 @@ class RKit::Decoration::Dsl
 
     def decorated?() false end
 
+    def need_decoration?() true end
+
   end
 
 
@@ -43,6 +45,8 @@ class RKit::Decoration::Dsl
     end
 
     def decorated?() false end
+
+    def need_decoration?() true end
 
   end
 end

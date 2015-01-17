@@ -14,7 +14,7 @@ module RKit::Decoration::ActionViewBaseExtend
   end
 
   protected def decorate assign
-    if assign.respond_to? :decorate
+    if assign.need_decoration?
       assign.decorate view_context: self
     else
       assign

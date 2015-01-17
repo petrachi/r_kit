@@ -11,7 +11,8 @@ class RKit::Decoration
     'base/object',
     'class',
     'dsl',
-    'enumerable_extend'
+    'enumerable_extend',
+    'object_extend'
 
   load_path __FILE__, 'action_view_base_extend', if: :implicit_decoration
 

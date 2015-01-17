@@ -23,7 +23,7 @@ module RKit::Decoration::Base
 
     decorator_class.after_initialize_procs.each{ |after_initialize_proc| self.instance_eval &after_initialize_proc }
   end
-  
+
 
   alias :decorator_class :class
   delegate :class, to: :__getobj__
@@ -34,6 +34,8 @@ module RKit::Decoration::Base
   end
 
   def decorated?() true end
+
+  def need_decoration?() false end
 
   def raw
     __getobj__
@@ -56,7 +58,7 @@ module RKit::Decoration::Base
   def method_missing method_name, *args, &block
     closure = super
 
-    if RKit::Decoration.config.recursive_decoration && closure.respond_to?(:decorate)
+    if RKit::Decoration.config.recursive_decoration && closure.need_decoration?
       closure.decorate(view_context: view)
     else
       closure
