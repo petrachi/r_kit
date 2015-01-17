@@ -2,7 +2,7 @@ class RKit::Frame::CollectionDsl
 
   act_as_a_dsl
 
-  name :framed_instance_dsl
+  name :framed_collection_dsl
   method :acts_as_frameable_collection
   domain Enumerable
 
