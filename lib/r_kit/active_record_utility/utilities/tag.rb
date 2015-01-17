@@ -20,11 +20,15 @@ class RKit::ActiveRecordUtility::Tag
     validates_presence_of :tag
     validates_uniqueness_of :tag
 
-    def tagged(tag) find_by tag: tag end
+    def tagged(tag) find_by tag: tag.underscore end
   end
 
   methods :instance do
-    def to_param() tag end
+    def to_param() tag.dasherize end
+  end
+
+  methods :decorator do
+    delegate :to_param, to: :__getobj__
   end
 
 end
