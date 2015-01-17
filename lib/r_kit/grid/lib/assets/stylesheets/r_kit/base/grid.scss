@@ -1,26 +1,23 @@
 .grid {
   margin: auto;
-  width: $base_width * 94;
+  width: $base_width * 96;
 
-  .grid-row {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
 
-    margin: 0 -#{$base_width};
+  @for $col_size from 1 through 12 {
+    .grid-col-#{ $col_size } {
+      padding: 0 $base_width;
+      width: $base_width * 8 * $col_size;
+      box-sizing: border-box;
+      flex-shrink: 0;
+    }
 
-    @for $col_size from 1 through 12 {
-      .grid-col-#{ $col_size } {
-        margin: 0 $base_width;
-        width: $base_width * (8 * $col_size - 2);
-        flex-shrink: 0;
-      }
-
-      @for $off_size from 1 through 12-$col_size {
-        .grid-col-#{ $col_size }-off-#{ $off_size } {
-          @extend .grid-col-#{ $col_size };
-          margin-left: $base_width * (8 * $off_size + 1);
-        }
+    @for $off_size from 1 through 12-$col_size {
+      .grid-col-#{ $col_size }-off-#{ $off_size } {
+        @extend .grid-col-#{ $col_size };
+        margin-left: $base_width * (8 * $off_size + 1);
       }
     }
   }

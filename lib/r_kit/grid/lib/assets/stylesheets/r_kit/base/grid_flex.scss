@@ -1,0 +1,19 @@
+.grid.grid-flex{
+  margin: 0;
+  width: auto;
+  min-width: $base_width * 96;
+
+  @for $col_size from 1 through 12 {
+    .grid-col-#{ $col_size } {
+      width: $col_size * 100 / 12#{'%'};
+      min-width: $base_width * 8 * $col_size;
+    }
+
+    @for $off_size from 1 through 12-$col_size {
+      .grid-col-#{ $col_size }-off-#{ $off_size } {
+        @extend .grid-col-#{ $col_size };
+        margin-left: $off_size * 100 / 12#{'%'};
+      }
+    }
+  }
+}

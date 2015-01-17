@@ -1,0 +1,5 @@
+@each $align in flex-start flex-end center baseline stretch {
+  .grid.grid-items-#{ $align } {
+    align-items: $align;
+  }
+}

@@ -20,21 +20,7 @@ class RKit::Grid::Base
   end
 
 
-  class << self
-    def binding_accessor name
-      define_method name do |value, &block|
-        _binding.block = block if block
-        _binding.send "#{ name }=", value
 
-        self
-      end
-    end
-  end
-
-  binding_accessor :col_size
-  binding_accessor :attributes
-  binding_accessor :row_attributes
-  binding_accessor :col_attributes
 
 
   def capture
@@ -42,7 +28,7 @@ class RKit::Grid::Base
   end
 
   def to_s
-    _h.content_tag :div, _attributes, &method(:capture)
+    _h.content_tag _tag, _attributes, &method(:capture)
   end
 
 end

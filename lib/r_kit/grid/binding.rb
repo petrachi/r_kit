@@ -23,9 +23,6 @@ class RKit::Grid::Binding
     to: :@attributes
 
   delegate :attributes=, :attributes,
-    to: :@row_attributes, prefix: :row
-
-  delegate :attributes=, :attributes,
     to: :@col_attributes, prefix: :col
 
   def mass_assign assigns
@@ -76,7 +73,7 @@ class RKit::Grid::Binding
       when Array
         value.map{ |unique_value| process(unique_value, object) }.join(' ')
       when String, Symbol
-        value.to_s.dasherize
+        value.dasherize
       else
         raise ArgumentError, 'Must be Array, Proc or String/Symbol'
       end
