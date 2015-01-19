@@ -31,6 +31,12 @@ class LoadPath
 
   def load_path!
     require fullpath
+  rescue NameError => e
+    warn %Q{
+WARNING - An error occur during `RKit' initialization
+  The file #{ fullpath } could not be loaded.
+  Ruby stack says: #{ e.message }.
+    }
   end
 
   def load!
