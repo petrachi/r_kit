@@ -1,6 +1,6 @@
 .grid {
   margin: auto;
-  width: $base_width * 96;
+  width: grid-base-width() * 96;
 
   display: flex;
   flex-wrap: wrap;
@@ -8,8 +8,8 @@
 
   @for $col_size from 1 through 12 {
     .grid-col-#{ $col_size } {
-      padding: 0 $base_width;
-      width: $base_width * 8 * $col_size;
+      padding: 0 grid-base-width();
+      width: grid-base-width() * 8 * $col_size;
       box-sizing: border-box;
       flex-shrink: 0;
     }
@@ -17,7 +17,7 @@
     @for $off_size from 1 through 12-$col_size {
       .grid-col-#{ $col_size }-off-#{ $off_size } {
         @extend .grid-col-#{ $col_size };
-        margin-left: $base_width * (8 * $off_size + 1);
+        margin-left: grid-base-width() * (8 * $off_size + 1);
       }
     }
   }
