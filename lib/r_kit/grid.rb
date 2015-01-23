@@ -1,7 +1,6 @@
 class RKit::Grid
 
-  with_engine __FILE__
-  with_sprockets __FILE__
+  with_sprockets __FILE__, :stylesheets
 
   load_path __FILE__,
     'base',
