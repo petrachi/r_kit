@@ -1,29 +1,30 @@
 class RKit::Core::Engineer
-  attr_accessor :_base, :pathname, :sprockets
+  attr_accessor :_base, :sprockets_folders
 
   def initialize base
     @_base = base
+    @sprockets_folders = []
   end
 
 
-  def load_engine?
-    @pathname
+
+  def with_sprockets file, *paths
+    paths.each do |path|
+      sprockets_folders << File.expand_path(path.to_s, file.chomp!(File.extname(file)))
+    end
+
+    _base.load_path file, 'sass_extend'
   end
 
-  def load_engine!
-    pathname = @pathname
 
-    Class.new(Rails::Engine) do
-      paths.path = pathname
+
+  def load_folders!
+    sprockets_folders.each do |folder|
+      Rails.application.assets.append_path folder
     end
   end
 
-
-  def load_sprockets?
-    @sprockets
-  end
-
-  def load_sprockets!
+  def update_digest!
     digest = _base.digest
     sprockets_extend = Module.new do
       define_method 'digest' do
@@ -35,8 +36,14 @@ class RKit::Core::Engineer
   end
 
 
+  def should_load?
+    !sprockets_folders.empty?
+  end
+
   def load!
-    load_engine! if load_engine?
-    load_sprockets! if load_sprockets?
+    if should_load?
+      load_folders!
+      update_digest!
+    end
   end
 end

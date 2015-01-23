@@ -17,20 +17,14 @@ class RKit::Core
     end
 
 
-    def with_engine file
-      @_engine.pathname = Pathname.new(File.dirname(file)) + name.demodulize.underscore
-    end
-
-    def with_sprockets file
-      @_engine.sprockets = true
-      load_path file, 'sass_extend'
-    end
-
-
     # TODO: define a method "config_get" that retreive the rkit config
     # to do so, we will iterate throug the namespaces until we find somthing that inherit from RKit::Core
     delegate :config, :alias_config, :preset,
       to: :@_config
+
+
+    delegate :with_sprockets,
+      to: :@_engine
 
 
     delegate :load_path, :dependency,
