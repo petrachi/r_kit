@@ -1,7 +1,6 @@
 class RKit::Css
 
-  with_engine __FILE__
-  with_sprockets __FILE__
+  with_sprockets __FILE__, :stylesheets
 
   config :colors, :black, '#111'
   config :colors, :dark_black, '#000'

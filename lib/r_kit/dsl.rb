@@ -61,6 +61,11 @@ class RKit::Dsl
   # then -> def self.clas_method, -> def instance_method
   # then, in host class -> act_as_x -> define "@X", X_delegator(self), delegate *X.methods, to: @X
 
+  # TODO: allow a new syntax
+  # directly in the 'domain' class
+  # define_dsl :name, args do
+  #   ...
+  # end
 
   # load_path __FILE__, 'test'
 
