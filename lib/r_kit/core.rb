@@ -8,6 +8,7 @@ class RKit::Core
     def init!
       @_config = Configurer.new self
       @_engine = Engineer.new self
+      @_helper = Helper.new self
       @_load = Loader.new self
     end
 
@@ -48,6 +49,13 @@ class RKit::Core
     end
 
 
+    delegate :description, :method,
+      to: :@_helper
+
+    def help
+      print @_helper.inspect
+    end
+
     def inspect
       "#{ name } config_w/#{ @_config.inspect } loaded/#{ loaded? }"
       # TODO: add link to doc
@@ -64,6 +72,9 @@ class RKit::Core
 
   # TODO: make engine mountable AFTER rails initialization
   require 'r_kit/core/engineer.rb'
+
+  require 'r_kit/core/helper.rb'
+  require 'r_kit/core/helper/method.rb'
 
   require 'r_kit/core/loader.rb'
   require 'r_kit/core/loader/dependency.rb'
