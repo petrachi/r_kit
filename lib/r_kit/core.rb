@@ -52,7 +52,7 @@ class RKit::Core
     delegate :description, :method,
       to: :@_helper
 
-    def help
+    def man
       print @_helper.inspect
     end
 
@@ -75,6 +75,7 @@ class RKit::Core
 
   require 'r_kit/core/helper.rb'
   require 'r_kit/core/helper/method.rb'
+  require 'r_kit/core/helper/printer.rb'
 
   require 'r_kit/core/loader.rb'
   require 'r_kit/core/loader/dependency.rb'

@@ -34,9 +34,25 @@ class RKit::Core::Helper
       Methods
       #{ methods }
     }
+
+    me = self
+
+    RKit::Core::Helper::Man.new.inspect do
+      title me.base.name
+    end
   end
 
-  def methods
-    @methods.map(&:inspect).map{ |str| "# " + str }.join('\n')
+  def method_names
+    @methods#.map(&:inspect).map{ |str| "# " + str }.join('\n')
   end
+
+  delegate :print, to: 'RKit::Core::Helper::Printer'
+
+  def inspect
+    print self do
+      title base.name
+      list method_names.map(&:name)
+    end
+  end
+
 end
